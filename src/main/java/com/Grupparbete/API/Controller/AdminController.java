@@ -21,17 +21,15 @@ public class AdminController {
 //    @Autowired
 //    private CustomerServiceImpl cinemaCustomerService;
 
-    @Autowired
-    private MovieServiceImpl movieService;
+//    @Autowired
+//    private MovieServiceImpl movieService;
 
-    @Autowired
-    private CinemaRoomServiceImpl cinemaRoomService;
+//    @Autowired
+//    private CinemaRoomServiceImpl cinemaRoomService;
 
-    @Autowired
-    private AddressServiceImpl CinemaAddressService;
-
+    private MovieService movieService;
+    private CinemaRoomService cinemaRoomService;
     private CustomerService customerService;
-    private AddressService addressService;
     private DishesService dishesService;
     private SushiRoomService sushiRoomService;
     private SushiBookingService bookingService;
@@ -121,14 +119,6 @@ public class AdminController {
 //        return ResponseEntity.ok("Kund med ID: " + id + " har uppdaterats.");
 //    }
 
-    // Tobbe
-    @PostMapping("/customers")
-    public Customer saveCustomer(@RequestBody Customer customer) {
-        if (customer.getCustomerId() > 0){
-            customer.setCustomerId(0);
-        }
-        return customerService.saveCustomer(customer);
-    }
 
 
 
@@ -148,13 +138,7 @@ public class AdminController {
         return ("Customer with id: " + id + " has been deleted!");
     }
 
-//    @PutMapping("customers/{id}")
-//    public Customer updateCustomer(@PathVariable int id, @RequestBody Customer s) {
-//        logger.info("admin updated customer with ID " + id);
-//        s.setId(id);
-//        Customer customer = customerService.saveCustomer(s);
-//        return customer;
-//    }
+
 
 
     @PostMapping("/movies")

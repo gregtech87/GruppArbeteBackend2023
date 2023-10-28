@@ -5,24 +5,29 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "address")
 public class Address {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "address_id")
     private int id;
-
     @Column(name = "street")
     private String street;
-    @Column(name = "postalcode")
+    @Column(name = "postal_code")
     private int postalCode;
     @Column(name = "city")
     private String city;
 
-    public Address(String street,int postalCode,String city){
+    public Address() {
+    }
+
+    public Address(String street, int postalCode, String city) {
         this.street = street;
         this.postalCode = postalCode;
         this.city = city;
     }
-    public Address(){
 
+    public Address(int id) {
+        this.id = id;
     }
 
     public int getId() {
@@ -62,9 +67,8 @@ public class Address {
         return "Address{" +
                 "id=" + id +
                 ", street='" + street + '\'' +
-                ", postalCode='" + postalCode + '\'' +
+                ", postalCode=" + postalCode +
                 ", city='" + city + '\'' +
                 '}';
     }
 }
-

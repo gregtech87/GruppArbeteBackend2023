@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -65,7 +66,6 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     @Transactional
     public Customer saveCustomer(Customer customer) {
-        System.out.println("HEJ HOPP GUMMI SNOPP: "+customer);
         customer.setAddress(addressService.checkIfExistsInDatabaseIfNotSave(customer.getAddress(), true));
         customer.setTrips(tripService.inspectTripList(customer.getTrips(), customer.getCustomerId()));
         logger.info("Customer saved: " + customer);
@@ -99,12 +99,32 @@ public class CustomerServiceImpl implements CustomerService {
         return saveCustomer(customerFromDb);
     }
 
-    @Override
-    @Transactional
-    public void deleteCustomerById(int customerId) {
-        System.out.println("Removed customer from database");
-        customerRepository.deleteById(customerId);
-    }
+
+ @Override
+ @Transactional
+ public void deleteCustomerById(int id) {
+     Customer customer = findCustomerById(id);
+     List<Trip> tripList = customer.getTrips();
+     List<Trip> tripListForRemoval = new ArrayList<>();
+     for (int i = tripList.size()-1; i >= 0; i--){
+         tripListForRemoval.add(tripList.get(i));
+         tripList.remove(i);
+     }
+     saveCustomer(customer);
+     for (Trip t : tripListForRemoval){
+         tripService.deleteById(t.getTripId());
+     }
+
+     int addressId = customer.getAddress().getId();
+
+     customerRepository.deleteById(id);
+     logger.info("Customer deleted: " + customer);
+
+     List<Customer> remainingCustomersWithSameAddress = findCustomersByAddressId(addressId);
+     if (remainingCustomersWithSameAddress.isEmpty()) {
+         addressService.deleteAddressById(addressId);
+     }
+ }
     @Override
     public List<Customer> findCustomersByAddressId(int addressId) {
         return customerRepository.findByAddress_Id(addressId);

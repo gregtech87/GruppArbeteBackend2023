@@ -11,6 +11,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -64,7 +65,12 @@ public class OrderServiceImpl implements OrderService {
 
             double dishSEKPrice = dish.getSekPrice() * quantity;
             totalSEKPrice += dishSEKPrice;
-            totalYENPrice += dishSEKPrice * converter.getSEKToYenExchangeRate();
+            try{
+                totalYENPrice = (int) CurrencyConverter.SekToRequestedCurrency(dishSEKPrice, "JPY");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
 
             OrderDetails orderDetails = new OrderDetails();
             orderDetails.setCustomer(customer);
