@@ -1,5 +1,6 @@
 package com.Grupparbete.API.Service;
 
+import com.Grupparbete.API.CurrencyConverter;
 import com.Grupparbete.API.DAO.OrderRepository;
 import com.Grupparbete.API.DTO.OrderItemDTO;
 import com.Grupparbete.API.Entities.Customer;
@@ -60,7 +61,6 @@ public class OrderServiceImpl implements OrderService {
                 throw new IllegalArgumentException("Felaktigt rätt-ID: " + dishId);
             }
 
-            CurrencyConverter converter = new CurrencyConverter();
 
             double dishSEKPrice = dish.getSekPrice() * quantity;
             totalSEKPrice += dishSEKPrice;
@@ -71,7 +71,11 @@ public class OrderServiceImpl implements OrderService {
             orderDetails.setDish(dish);
             orderDetails.setQuantity(quantity);
             orderDetails.setPriceSEK(dishSEKPrice);
-            orderDetails.setPriceYEN((int) (dishSEKPrice * converter.getSEKToYenExchangeRate()));
+            try{
+            orderDetails.setPriceYEN((int) CurrencyConverter.SekToRequestedCurrency(dishSEKPrice, "JPY"));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             orderDetails.setOrder(order);
 
             orderDetailsList.add(orderDetails);

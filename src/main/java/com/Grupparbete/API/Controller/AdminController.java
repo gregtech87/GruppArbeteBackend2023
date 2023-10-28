@@ -37,14 +37,15 @@ public class AdminController {
     private SushiBookingService bookingService;
     private OrderService orderService;
 
-
-    public AdminController(CustomerService custService, AddressService addService, DishesService dishService, SushiRoomService rooService, SushiBookingService bookService, OrderService ordService){
-        customerService = custService;
-        addressService = addService;
-        dishesService = dishService;
-        sushiRoomService = rooService;
-        bookingService = bookService;
-        orderService = ordService;
+    @Autowired
+    public AdminController(MovieService movieService, CinemaRoomService cinemaRoomService, CustomerService customerService, DishesService dishesService, SushiRoomService sushiRoomService, SushiBookingService sushiBookingService, OrderService orderService){
+        this.movieService = movieService;
+        this.cinemaRoomService = cinemaRoomService;
+        this.customerService = customerService;
+        this.dishesService = dishesService;
+        this.sushiRoomService = sushiRoomService;
+        this.bookingService = sushiBookingService;
+        this.orderService = orderService;
     }
 
     @GetMapping("/customers")
@@ -52,55 +53,15 @@ public class AdminController {
         return customerService.findAllCustomers();
     }
 
-//    @GetMapping("/customers")
-//    public List<Customer> getAllCustomers() {
-//        return customerService.findAllCustomers();
-//    }
+    // Tobbe
+    @PostMapping("/customers")
+    public Customer saveCustomer(@RequestBody Customer customer) {
+        if (customer.getCustomerId() > 0){
+            customer.setCustomerId(0);
+        }
+        return customerService.saveCustomer(customer);
+    }
 
-
-//    @PostMapping("/customers")
-//    public Customer saveCustomer(@RequestBody Customer s) {
-//        logger.info("admin added customer " + s.getName());
-//        s.setId(0);
-//        Optional<Address> addressOptional = addressService.findAddressById(s.getAddress().getId());
-//        if (addressOptional.isPresent()) {
-//            Address address = addressOptional.get();
-//            s.getAddress().setCity(address.getCity());
-//            s.getAddress().setPostalCode(address.getPostalCode());
-//            s.getAddress().setStreet(address.getStreet());
-//        }
-//        Customer customer = customerService.saveCustomer(s);
-//        return customer;
-//    }
-
-    //    @PostMapping("/customers")
-//    public Customer addCustomer(@RequestBody Customer newCustomer) {
-//
-//        Address existingAddress = addressService.findAddressByStreetAndPostalCodeAndCity(
-//                newCustomer.getAddress().getStreet(),
-//                newCustomer.getAddress().getPostalCode(),
-//                newCustomer.getAddress().getCity()
-//        );
-//
-//        if (existingAddress == null) {
-//            addressService.saveAddress(newCustomer.getAddress());
-//        }
-//
-//        Address customerAddress = addressService.findAddressByStreetAndPostalCodeAndCity(
-//                newCustomer.getAddress().getStreet(),
-//                newCustomer.getAddress().getPostalCode(),
-//                newCustomer.getAddress().getCity()
-//        );
-//
-//        newCustomer.setAddress(customerAddress);
-//
-//        Customer savedCustomer = customerService.saveCustomer(newCustomer);
-//        int customerID = savedCustomer.getId();
-//
-//        logger.info("Admin added a new customer with ID: " + customerID);
-//
-//        return savedCustomer;
-//    }
 
     //Tobbe
     @PutMapping("/customers/{id}")
@@ -108,6 +69,15 @@ public class AdminController {
         return customerService.updateCustomer(id, customer);
     }
 
+    //    @PutMapping("customers/{id}")
+//    public Customer updateCustomer(@PathVariable int id, @RequestBody Customer s) {
+//        logger.info("admin updated customer with ID " + id);
+//        s.setId(id);
+//        Customer customer = customerService.saveCustomer(s);
+//        return customer;
+//    }
+
+    //Rickard
 //    @PutMapping("/customers/{id}")
 //    public ResponseEntity<String> updateCustomer(@RequestBody Customer updatedCustomer, @PathVariable int id) {
 //        Customer existingCustomer = customerService.findCustomerById(id);
@@ -168,30 +138,8 @@ public class AdminController {
 //        customerService.deleteCustomerById(id);
 //        return "kund med id " + id + " har raderats";
 //    }
-//
-//    @DeleteMapping("/customers/{id}")
-//    public String SushideleteCustomer(@PathVariable int id) {
-//        Customer customer = customerService.findCustomerById(id);
-//
-//        if (customer == null) {
-//            return "Kund med ID " + id + " hittades inte.";
-//        }
-//
-//        Address customerAddress = customer.getAddress();
-//        int addressId = customerAddress.getId();
-//
-//        customerService.deleteCustomerById(id);
-//
-//        List<Customer> remainingCustomersWithSameAddress = customerService.findCustomersByAddressId(addressId);
-//
-//        if (remainingCustomersWithSameAddress.isEmpty()) {
-//            addressService.deleteAddressById(addressId);
-//        }
-//
-//        logger.info("Admin deleted customer with ID: " + id);
-//
-//        return "Kund med ID " + id + " har tagits bort.";
-//    }
+
+
 
     //Tobbe
     @DeleteMapping("/customers/{id}")
@@ -250,7 +198,7 @@ public class AdminController {
     @DeleteMapping("/sushis/{id}")
     public String deleteDish(@PathVariable int id) {
         Dishes deletedDish = dishesService.findDishById(id);
-
+        CurrencyConverter converter = new CurrencyConverter();
         if (deletedDish == null) {
             return "Maträtt med ID " + id + " hittades inte.";
         }
@@ -261,12 +209,11 @@ public class AdminController {
             int quantity = orderDetails.getQuantity();
             double priceSEK = orderDetails.getPriceSEK();
 
-            CurrencyConverter converter = new CurrencyConverter();
             Order order = orderDetails.getOrder();
             order.setQuantity(order.getQuantity() - quantity);
             order.setTotalPriceSEK(order.getTotalPriceSEK() - priceSEK);
             try {
-                order.setTotalPriceYEN((int) CurrencyConverter.SekToRequestedCurrency(order.getTotalPriceSEK(), "JPY"));
+                order.setTotalPriceYEN((int) converter.SekToRequestedCurrency(order.getTotalPriceSEK(), "JPY"));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -278,11 +225,10 @@ public class AdminController {
             int quantity = bookingDetails.getQuantity();
             double priceSEK = bookingDetails.getPriceSEK();
 
-            CurrencyConverter converter = new CurrencyConverter();
             SushiBooking booking = bookingDetails.getBooking();
             booking.setTotalPriceSEK(booking.getTotalPriceSEK() - priceSEK);
             try {
-                booking.setTotalPriceYEN((int) CurrencyConverter.SekToRequestedCurrency(booking.getTotalPriceSEK(), "JPY"));
+                booking.setTotalPriceYEN((int) converter.SekToRequestedCurrency(booking.getTotalPriceSEK(), "JPY"));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -295,7 +241,7 @@ public class AdminController {
 
     @PutMapping("/rooms/{id}")
     public ResponseEntity<String> updateRoom(@RequestBody SushiRoom updatedRoom, @PathVariable int id) {
-        SushiBooking existingRoom = SushiRoomService.findRoomById(id);
+        SushiRoom existingRoom = sushiRoomService.findRoomById(id);
         if (existingRoom == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("Rum med ID: " + id + " finns inte");

@@ -1,22 +1,22 @@
 package com.Grupparbete.API.Service;
 
 
+import com.Grupparbete.API.CurrencyConverter;
 import com.Grupparbete.API.DAO.DishesRepository;
 import com.Grupparbete.API.Entities.Dishes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
 
 @Service
 public class DishesServiceImpl implements DishesService {
     private DishesRepository dishesRepository;
-    private CurrencyConverter currencyConverter;
 
     @Autowired
-    public DishesServiceImpl(DishesRepository dishesRepository, CurrencyConverter currencyConverter) {
+    public DishesServiceImpl(DishesRepository dishesRepository) {
         this.dishesRepository = dishesRepository;
-        this.currencyConverter = currencyConverter;
     }
 
     @Override
@@ -26,10 +26,16 @@ public class DishesServiceImpl implements DishesService {
 
     @Override
     public List<Dishes> findAllDishes() {
+        CurrencyConverter converter = new CurrencyConverter();
         List<Dishes> dishes = dishesRepository.findAll();
         dishes.forEach(dish -> {
             double priceInSEK = dish.getSekPrice();
-            double exchangeRate = currencyConverter.getSEKToYenExchangeRate();
+            double exchangeRate = 0;
+            try {
+                exchangeRate = converter.SekToRequestedCurrency(priceInSEK, "JPY");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             double priceInYEN = priceInSEK * exchangeRate;
             int priceInYENRoundedUp = (int) Math.ceil(priceInYEN);
             dish.setYenPrice(priceInYENRoundedUp);

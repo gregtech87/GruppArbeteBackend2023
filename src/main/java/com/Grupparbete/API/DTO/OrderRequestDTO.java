@@ -1,4 +1,4 @@
-package com.wigell.wapi.dto;
+package com.Grupparbete.API.DTO;
 
 import com.Grupparbete.API.DTO.OrderItemDTO;
 

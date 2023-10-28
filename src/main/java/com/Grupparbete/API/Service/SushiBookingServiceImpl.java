@@ -1,5 +1,6 @@
 package com.Grupparbete.API.Service;
 
+import com.Grupparbete.API.CurrencyConverter;
 import com.Grupparbete.API.DAO.BookingDetailsRepository;
 import com.Grupparbete.API.DTO.OrderItemDTO;
 import com.Grupparbete.API.DTO.ShowBookingDTO;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.Grupparbete.API.DAO.SushiBookingRepository;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -140,8 +142,11 @@ public class SushiBookingServiceImpl implements SushiBookingService {
 
             double dishSEKPrice = dish.getSekPrice() * quantity;
             totalSEKPrice += dishSEKPrice;
-            int totalConvertedPrice = (int) (totalSEKPrice * currency.getSEKToYenExchangeRate());
-            totalYENPrice = totalConvertedPrice;
+            try{
+                totalYENPrice = (int) CurrencyConverter.SekToRequestedCurrency(dishSEKPrice, "JPY");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
 
             BookingDetails updatedBookingDetail = new BookingDetails();
             updatedBookingDetail.setCustomer(existingBooking.getCustomer());
@@ -151,7 +156,11 @@ public class SushiBookingServiceImpl implements SushiBookingService {
             updatedBookingDetail.setDish(dish);
             updatedBookingDetail.setQuantity(quantity);
             updatedBookingDetail.setPriceSEK(dishSEKPrice);
-            updatedBookingDetail.setPriceYEN((int) (dishSEKPrice * currency.getSEKToYenExchangeRate()));
+            try{
+                updatedBookingDetail.setPriceYEN((int) (CurrencyConverter.SekToRequestedCurrency(dishSEKPrice, "JPY")));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             updatedBookingDetail.setBookingDate(existingBooking.getBookingDate());
 
             updatedBookingDetails.add(updatedBookingDetail);
@@ -202,11 +211,13 @@ public class SushiBookingServiceImpl implements SushiBookingService {
                 throw new IllegalArgumentException("Felaktigt rätt-ID: " + dishId);
             }
 
-            CurrencyConverter currency = new CurrencyConverter();
             double dishSEKPrice = dish.getSekPrice() * quantity;
             totalSEKPrice += dishSEKPrice;
-            int totalConvertedPrice = (int) (totalSEKPrice * currency.getSEKToYenExchangeRate());
-            totalYENPrice = totalConvertedPrice;
+            try{
+                totalYENPrice = (int) (CurrencyConverter.SekToRequestedCurrency(totalSEKPrice, "JPY"));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
 
             booking.setTotalPriceSEK(totalSEKPrice);
             booking.setTotalPriceYEN(totalYENPrice);
@@ -222,7 +233,11 @@ public class SushiBookingServiceImpl implements SushiBookingService {
             bookingDetails.setDish(dish);
             bookingDetails.setQuantity(quantity);
             bookingDetails.setPriceSEK(dishSEKPrice);
-            bookingDetails.setPriceYEN((int) (dishSEKPrice * currency.getSEKToYenExchangeRate()));
+            try{
+                bookingDetails.setPriceYEN((int) CurrencyConverter.SekToRequestedCurrency(dishSEKPrice, "JPY"));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             bookingDetails.setBookingDate(bookingDate);
 
             bookingDetailsList.add(bookingDetails);
@@ -247,4 +262,4 @@ public class SushiBookingServiceImpl implements SushiBookingService {
 
 }
 
-}
+
