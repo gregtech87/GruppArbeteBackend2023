@@ -1,3 +1,4 @@
+package com.Grupparbete.API.Entities;
 
 import jakarta.persistence.*;
 
