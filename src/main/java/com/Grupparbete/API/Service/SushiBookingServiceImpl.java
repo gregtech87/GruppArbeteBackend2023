@@ -94,6 +94,7 @@ public class SushiBookingServiceImpl implements SushiBookingService {
         return showBookingDTO;
     }
 
+    @Override
     public SushiBooking updateReservation(int bookingId,int roomId, int guests, List<Integer> dishIds, List<Integer> quantities) {
         Optional<SushiBooking> existingBookingOptional = bookingRepository.findById(bookingId);
         int guestsInRoom = roomService.getGuestsInRoom(roomId);
@@ -137,8 +138,6 @@ public class SushiBookingServiceImpl implements SushiBookingService {
             if (dish == null) {
                 throw new IllegalArgumentException("Felaktigt rätt-ID: " + dishId);
             }
-
-            CurrencyConverter currency = new CurrencyConverter();
 
             double dishSEKPrice = dish.getSekPrice() * quantity;
             totalSEKPrice += dishSEKPrice;
