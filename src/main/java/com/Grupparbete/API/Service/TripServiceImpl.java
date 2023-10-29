@@ -47,7 +47,7 @@ public class TripServiceImpl implements TripService {
     @Override
     public Trip findById(int id) {
         Optional<Trip> t = tripRepository.findById(id);
-        Trip trip;
+        Trip trip = new Trip();
         if (t.isPresent()) {
             trip = t.get();
             try {
@@ -55,8 +55,6 @@ public class TripServiceImpl implements TripService {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-        } else {
-            throw new RuntimeException("Trip with id: " + id + " could not be found!");
         }
         return trip;
     }

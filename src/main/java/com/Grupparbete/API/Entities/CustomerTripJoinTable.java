@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "customer_trips")
-public class CustomTripJoinTable {
+public class CustomerTripJoinTable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,7 +15,7 @@ public class CustomTripJoinTable {
     @Column(name = "trip_id")
         private int tripId;
 
-    public CustomTripJoinTable() {
+    public CustomerTripJoinTable() {
     }
 
     public int getId() {

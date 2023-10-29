@@ -34,6 +34,5 @@ public class CurrencyConverter {
         double calculatedCurrency = sek * currency;
 
         return Math.round(calculatedCurrency);
-
     }
 }

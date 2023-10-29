@@ -31,12 +31,9 @@ public class AddressServiceImpl implements AddressService {
     @Override
     public Address findAddressById(int id) {
         Optional<Address> a = addressRepository.findById(id);
-        Address address;
+        Address address = new Address();
         if (a.isPresent()){
             address = a.get();
-        }
-        else {
-            throw new RuntimeException("Address with id: " + id + " could not be found!");
         }
         return address;
     }

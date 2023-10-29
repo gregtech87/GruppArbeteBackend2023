@@ -32,12 +32,9 @@ public class TripDestinationServiceImpl implements TripDestinationService {
     @Override
     public Destination findById(int id) {
         Optional<Destination> d = destinationRepository.findById(id);
-        Destination destination;
+        Destination destination = new Destination();
         if (d.isPresent()){
             destination = d.get();
-        }
-        else {
-            throw new RuntimeException("Destination with id: " + id + " could not be found!");
         }
         return destination;
     }

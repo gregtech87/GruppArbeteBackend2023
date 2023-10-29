@@ -46,7 +46,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Customer findCustomerById(int id) {
         Optional<Customer> c = customerRepository.findById(id);
-        Customer customer;
+        Customer customer = new Customer();
         if (c.isPresent()){
             customer = c.get();
             for (Trip t: customer.getTrips()){
@@ -56,9 +56,6 @@ public class CustomerServiceImpl implements CustomerService {
                     throw new RuntimeException(e);
                 }
             }
-        }
-        else {
-            throw new RuntimeException("Customer with id: " + id + " could not be found!");
         }
         return customer;
     }
