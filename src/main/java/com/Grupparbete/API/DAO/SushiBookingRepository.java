@@ -10,6 +10,6 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface SushiBookingRepository extends JpaRepository<SushiBooking, Integer> {
-    @Query("SELECT bd FROM BookingDetails bd WHERE bd.dish = :dish")
+    @Query("SELECT bd FROM SushiBookingDetails bd WHERE bd.dish = :dish")
     List<SushiBookingDetails> findBookingDetailsContainingDish(@Param("dish") Dishes dish);
 }

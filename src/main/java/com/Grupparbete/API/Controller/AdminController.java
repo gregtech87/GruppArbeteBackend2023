@@ -82,11 +82,33 @@ public class AdminController {
     }
 
     @PutMapping("rooms/{id}")
-    public CinemaRoom updateRoom(@PathVariable int id, @RequestBody CinemaRoom s) {
+    public CinemaRoom updateCinemaRoom(@PathVariable int id, @RequestBody CinemaRoom s) {
         logger.info("admin updated room with ID " + id);
         s.setId(id);
         CinemaRoom updatedRoom = cinemaRoomService.saveRoom(s);
         return updatedRoom;
+    }
+
+    @PutMapping("/rooms/{id}")
+    public ResponseEntity<String> updateSushiRoom(@RequestBody SushiRoom updatedRoom, @PathVariable int id) {
+        SushiRoom existingRoom = sushiRoomService.findRoomById(id);
+        if (existingRoom == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Rum med ID: " + id + " finns inte");
+        }
+
+        existingRoom.setName(updatedRoom.getName());
+        existingRoom.setDescription(updatedRoom.getDescription());
+        existingRoom.setMaxGuests(updatedRoom.getMaxGuests());
+
+        SushiRoom updated = sushiRoomService.updateRoom(existingRoom, id);
+
+        if (updated != null) {
+            logger.info("Admin updated room with ID: " + id);
+            return ResponseEntity.ok("Rum med ID " + id + " har uppdaterats.");
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Misslyckades med att uppdatera rummet.");
+        }
     }
 
     @PostMapping("/sushis")
@@ -141,27 +163,7 @@ public class AdminController {
         return "Maträtt med ID " + id + " har tagits bort.";
     }
 
-    @PutMapping("/rooms/{id}")
-    public ResponseEntity<String> updateRoom(@RequestBody SushiRoom updatedRoom, @PathVariable int id) {
-        SushiRoom existingRoom = sushiRoomService.findRoomById(id);
-        if (existingRoom == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("Rum med ID: " + id + " finns inte");
-        }
 
-        existingRoom.setName(updatedRoom.getName());
-        existingRoom.setDescription(updatedRoom.getDescription());
-        existingRoom.setMaxGuests(updatedRoom.getMaxGuests());
-
-        SushiRoom updated = sushiRoomService.updateRoom(existingRoom, id);
-
-        if (updated != null) {
-            logger.info("Admin updated room with ID: " + id);
-            return ResponseEntity.ok("Rum med ID " + id + " har uppdaterats.");
-        } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Misslyckades med att uppdatera rummet.");
-        }
-    }
 
     @GetMapping("/sushis")
     public List<Dishes> findAllDishes() {
