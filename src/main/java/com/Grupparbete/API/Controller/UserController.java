@@ -34,7 +34,7 @@ public class UserController {
 
 
     @Autowired
-    public UserController(SushiBookingService sushiBookingService, SushiOrderService sushiOrderService, TripService tripService, TripDestinationService tripDestinationService) {
+    public UserController(SushiBookingService sushiBookingService, SushiOrderService sushiOrderService, TripService tripService, TripDestinationService tripDestinationService, CinemaRoomService CinemaRoomService) {
         this.sushiBookingService = sushiBookingService;
         this.sushiOrderService = sushiOrderService;
         this.tripService = tripService;
@@ -56,7 +56,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body("Beställning mottagen");
     }
 
-    @PostMapping("/bookings")
+    @PostMapping("/sushibookings")
     public ResponseEntity<String> reserveRoom(@RequestBody BookingRequestDTO bookingRequestDTO) {
         int customerId = bookingRequestDTO.getCustomerId();
         int roomId = bookingRequestDTO.getRoomId();
@@ -77,7 +77,7 @@ public class UserController {
         }
     }
 
-    @PostMapping("/bookings")
+    @PostMapping("/cinemabookings")
     public CinemaBooking saveBooking(@RequestBody CinemaBooking booking) {
         booking.setId(0);
         int totalPrice = cinemaBookingService.calculateTotalPrice(booking);
@@ -92,7 +92,7 @@ public class UserController {
         return savedBooking;
     }
 
-    @PutMapping("/bookings/{id}")
+    @PutMapping("/sushibookings/{id}")
     public ResponseEntity<String> updateBooking(@PathVariable int id, @RequestBody BookingRequestDTO updatedBookingRequestDTO) {
         int room = updatedBookingRequestDTO.getRoomId();
         int guests = updatedBookingRequestDTO.getGuests();
@@ -113,7 +113,7 @@ public class UserController {
         }
     }
 
-    @PutMapping("bookings/{id}")
+    @PutMapping("cinemabookings/{id}")
     public CinemaBooking updateBooking(@PathVariable int id, @RequestBody CinemaBooking s){
         logger.info("Customer updated booking with ID " + id);
         CinemaBooking booking = saveBooking(s);
@@ -121,7 +121,7 @@ public class UserController {
         return booking;
     }
 
-    @GetMapping("/bookings/{id}")
+    @GetMapping("/sushibookings/{id}")
     public ResponseEntity<ShowBookingDTO> getBookingWithAllData(@PathVariable int id) {
         ShowBookingDTO showBookingDTO = sushiBookingService.getBookingWithDetails(id);
 
@@ -132,7 +132,7 @@ public class UserController {
         }
     }
 
-    @GetMapping("/bookings/{id}")
+    @GetMapping("/cinemabookings/{id}")
     public Optional<CinemaBooking> getBooking(@PathVariable int id) {
         return cinemaBookingService.findById(id);
     }

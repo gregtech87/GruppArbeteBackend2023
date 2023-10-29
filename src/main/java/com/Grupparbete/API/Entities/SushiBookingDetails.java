@@ -34,7 +34,7 @@ public class SushiBookingDetails {
     @Column(name = "quantity")
     private int quantity;
 
-    @Column(name = "priceSEK", precision = 10, scale = 2)
+    @Column(name = "priceSEK")
     private double priceSEK;
 
     @Column(name = "priceYEN")

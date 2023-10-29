@@ -24,10 +24,10 @@ public class Order {
     @Column(name = "quantity")
     private int quantity;
 
-    @Column(name = "total_priceSEK", precision = 10, scale = 2)
+    @Column(name = "total_price_sek")
     private double totalPriceSEK;
 
-    @Column(name = "total_priceYEN")
+    @Column(name = "total_price_yen")
     private int totalPriceYEN;
 
     @Column(name = "order_date")
