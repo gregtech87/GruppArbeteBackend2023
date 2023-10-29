@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -234,8 +235,8 @@ public class AdminController {
     }
 
     //sebbe
-    @DeleteMapping("/customers/{id}")
-    public String deleteCustomer(@PathVariable int id){
+    @DeleteMapping("/mccustomers/{id}")
+    public String deleteMcCustomer(@PathVariable int id){
         Optional<Customer> customer = mcAdminServiceRepository.findCustomerById(id);
         if(customer.isEmpty()){
             logger.error("Kund med id: " + id + " finns inte i databasen.");

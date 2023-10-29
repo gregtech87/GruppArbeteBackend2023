@@ -1,0 +1,81 @@
+2023-10-29 22:41:31.478 [http-nio-8585-exec-1] INFO  MyLogger - Destination edited 
+From: Destination{id=1, hotellName='The Continental', pricePerWeek=1225.5, city='Bryssel', country='Tyskland'}
+To: Destination{id=1, hotellName='The Continental', pricePerWeek=1225.5, city='Bryssel', country='Tyskland'}
+2023-10-29 22:41:31.488 [http-nio-8585-exec-1] INFO  MyLogger - Destination saved: Destination{id=1, hotellName='The Continental', pricePerWeek=1225.5, city='Bryssel', country='Tyskland'}
+2023-10-29 22:41:31.528 [http-nio-8585-exec-1] INFO  MyLogger - Trip saved: Trip{tripId=1, departureDate='date1', numberOfWeeks=1, totalPriceSek=1225.5, totalPricePln=464.0, destination=Destination{id=1, hotellName='The Continental', pricePerWeek=1225.5, city='Bryssel', country='Tyskland'}}
+2023-10-29 22:41:31.588 [http-nio-8585-exec-1] INFO  MyLogger - Destination edited 
+From: Destination{id=2, hotellName='Clarion', pricePerWeek=6444.8, city='Sundsvall', country='Sverige'}
+To: Destination{id=2, hotellName='Clarion', pricePerWeek=6444.8, city='Sundsvall', country='Sverige'}
+2023-10-29 22:41:31.588 [http-nio-8585-exec-1] INFO  MyLogger - Destination saved: Destination{id=2, hotellName='Clarion', pricePerWeek=6444.8, city='Sundsvall', country='Sverige'}
+2023-10-29 22:41:31.620 [http-nio-8585-exec-1] INFO  MyLogger - Trip saved: Trip{tripId=2, departureDate='date2', numberOfWeeks=2, totalPriceSek=12889.6, totalPricePln=4877.0, destination=Destination{id=2, hotellName='Clarion', pricePerWeek=6444.8, city='Sundsvall', country='Sverige'}}
+2023-10-29 22:41:31.691 [http-nio-8585-exec-1] INFO  MyLogger - Destination edited 
+From: Destination{id=3, hotellName='Scandic', pricePerWeek=4444.5, city='Umeå', country='Sverige'}
+To: Destination{id=3, hotellName='Scandic', pricePerWeek=4444.5, city='Umeå', country='Sverige'}
+2023-10-29 22:41:31.692 [http-nio-8585-exec-1] INFO  MyLogger - Destination saved: Destination{id=3, hotellName='Scandic', pricePerWeek=4444.5, city='Umeå', country='Sverige'}
+2023-10-29 22:41:31.726 [http-nio-8585-exec-1] INFO  MyLogger - Trip saved: Trip{tripId=3, departureDate='date3', numberOfWeeks=3, totalPriceSek=13333.5, totalPricePln=5045.0, destination=Destination{id=3, hotellName='Scandic', pricePerWeek=4444.5, city='Umeå', country='Sverige'}}
+2023-10-29 22:41:31.765 [http-nio-8585-exec-1] INFO  MyLogger - Destination edited 
+From: Destination{id=4, hotellName='Los Pyramidos', pricePerWeek=66748.8, city='Alcudia', country='Mallorca'}
+To: Destination{id=4, hotellName='Los Pyramidos', pricePerWeek=66748.8, city='Alcudia', country='Mallorca'}
+2023-10-29 22:41:31.765 [http-nio-8585-exec-1] INFO  MyLogger - Destination saved: Destination{id=4, hotellName='Los Pyramidos', pricePerWeek=66748.8, city='Alcudia', country='Mallorca'}
+2023-10-29 22:41:31.793 [http-nio-8585-exec-1] INFO  MyLogger - Trip saved: Trip{tripId=4, departureDate='date4', numberOfWeeks=4, totalPriceSek=266995.2, totalPricePln=101017.0, destination=Destination{id=4, hotellName='Los Pyramidos', pricePerWeek=66748.8, city='Alcudia', country='Mallorca'}}
+2023-10-29 22:41:31.828 [http-nio-8585-exec-1] INFO  MyLogger - Destination edited 
+From: Destination{id=5, hotellName='Happpchapp', pricePerWeek=60790.0, city='Vilse', country='LångtBortIStan'}
+To: Destination{id=5, hotellName='Happpchapp', pricePerWeek=60790.0, city='Vilse', country='LångtBortIStan'}
+2023-10-29 22:41:31.829 [http-nio-8585-exec-1] INFO  MyLogger - Destination saved: Destination{id=5, hotellName='Happpchapp', pricePerWeek=60790.0, city='Vilse', country='LångtBortIStan'}
+2023-10-29 22:41:31.920 [http-nio-8585-exec-1] INFO  MyLogger - Trip saved: Trip{tripId=5, departureDate='date5', numberOfWeeks=5, totalPriceSek=303950.0, totalPricePln=114998.0, destination=Destination{id=5, hotellName='Happpchapp', pricePerWeek=60790.0, city='Vilse', country='LångtBortIStan'}}
+2023-10-29 22:41:31.960 [http-nio-8585-exec-1] INFO  MyLogger - Destination edited 
+From: Destination{id=5, hotellName='Happpchapp', pricePerWeek=60790.0, city='Vilse', country='LångtBortIStan'}
+To: Destination{id=5, hotellName='Happpchapp', pricePerWeek=60790.0, city='Vilse', country='LångtBortIStan'}
+2023-10-29 22:41:31.960 [http-nio-8585-exec-1] INFO  MyLogger - Destination saved: Destination{id=5, hotellName='Happpchapp', pricePerWeek=60790.0, city='Vilse', country='LångtBortIStan'}
+2023-10-29 22:41:31.988 [http-nio-8585-exec-1] INFO  MyLogger - Trip saved: Trip{tripId=6, departureDate='date5', numberOfWeeks=5, totalPriceSek=303950.0, totalPricePln=114998.0, destination=Destination{id=5, hotellName='Happpchapp', pricePerWeek=60790.0, city='Vilse', country='LångtBortIStan'}}
+2023-10-29 22:43:27.247 [http-nio-8585-exec-6] INFO  MyLogger - Address was edited 
+From: Address{id=5, street='skrubrna 34', postalCode=32158, city='Tallin'}
+To: Address{id=5, street='skrubrna 34', postalCode=32158, city='Tallin'}
+2023-10-29 22:43:27.248 [http-nio-8585-exec-6] INFO  MyLogger - Address was saved: Address{id=5, street='skrubrna 34', postalCode=32158, city='Tallin'}
+2023-10-29 22:43:27.327 [http-nio-8585-exec-6] INFO  MyLogger - Destination edited 
+From: Destination{id=5, hotellName='Happpchapp', pricePerWeek=60790.0, city='Vilse', country='LångtBortIStan'}
+To: Destination{id=5, hotellName='Happpchapp', pricePerWeek=60790.0, city='Vilse', country='LångtBortIStan'}
+2023-10-29 22:43:27.328 [http-nio-8585-exec-6] INFO  MyLogger - Destination saved: Destination{id=5, hotellName='Happpchapp', pricePerWeek=60790.0, city='Vilse', country='LångtBortIStan'}
+2023-10-29 22:43:27.328 [http-nio-8585-exec-6] INFO  MyLogger - Trip edited 
+From: Trip{tripId=6, departureDate='date5', numberOfWeeks=5, totalPriceSek=303950.0, totalPricePln=114998.0, destination=Destination{id=5, hotellName='Happpchapp', pricePerWeek=60790.0, city='Vilse', country='LångtBortIStan'}}
+To: Trip{tripId=6, departureDate='date5', numberOfWeeks=5, totalPriceSek=303950.0, totalPricePln=114998.0, destination=Destination{id=5, hotellName='Happpchapp', pricePerWeek=60790.0, city='Vilse', country='LångtBortIStan'}}
+2023-10-29 22:43:27.328 [http-nio-8585-exec-6] INFO  MyLogger - Destination edited 
+From: Destination{id=5, hotellName='Happpchapp', pricePerWeek=60790.0, city='Vilse', country='LångtBortIStan'}
+To: Destination{id=5, hotellName='Happpchapp', pricePerWeek=60790.0, city='Vilse', country='LångtBortIStan'}
+2023-10-29 22:43:27.328 [http-nio-8585-exec-6] INFO  MyLogger - Destination saved: Destination{id=5, hotellName='Happpchapp', pricePerWeek=60790.0, city='Vilse', country='LångtBortIStan'}
+2023-10-29 22:43:27.356 [http-nio-8585-exec-6] INFO  MyLogger - Trip saved: Trip{tripId=6, departureDate='date5', numberOfWeeks=5, totalPriceSek=303950.0, totalPricePln=114998.0, destination=Destination{id=5, hotellName='Happpchapp', pricePerWeek=60790.0, city='Vilse', country='LångtBortIStan'}}
+2023-10-29 22:43:27.361 [http-nio-8585-exec-6] INFO  MyLogger - Customer saved: Customer{id=0, userName='lasse', password='lasse', firstName='Lasse', lastName='Kongo', email='LK@AB.se)', phone=34654984, dateOfBirth='3/8-1978', address=Address{id=5, street='skrubrna 34', postalCode=32158, city='Tallin'}, tripList=[Trip{tripId=6, departureDate='date5', numberOfWeeks=5, totalPriceSek=303950.0, totalPricePln=114998.0, destination=Destination{id=5, hotellName='Happpchapp', pricePerWeek=60790.0, city='Vilse', country='LångtBortIStan'}}]}
+2023-10-29 22:43:49.722 [http-nio-8585-exec-7] INFO  MyLogger - Address was edited 
+From: Address{id=5, street='skrubrna 34', postalCode=32158, city='Tallin'}
+To: Address{id=5, street='skrubrna 34', postalCode=32158, city='Tallin'}
+2023-10-29 22:43:49.723 [http-nio-8585-exec-7] INFO  MyLogger - Address was saved: Address{id=5, street='skrubrna 34', postalCode=32158, city='Tallin'}
+2023-10-29 22:43:49.723 [http-nio-8585-exec-7] INFO  MyLogger - Customer saved: Customer{id=0, userName='lasse', password='lasse', firstName='Lasse', lastName='Kongo', email='LK@AB.se)', phone=34654984, dateOfBirth='3/8-1978', address=Address{id=5, street='skrubrna 34', postalCode=32158, city='Tallin'}, tripList=[]}
+2023-10-29 22:44:00.724 [http-nio-8585-exec-8] INFO  MyLogger - Address was edited 
+From: Address{id=2, street='Sjöbotten 1', postalCode=46532, city='LångtBortIStan'}
+To: Address{id=2, street='skrubrna 34', postalCode=32158, city='Tallin'}
+2023-10-29 22:44:00.725 [http-nio-8585-exec-8] INFO  MyLogger - Address was saved: Address{id=2, street='skrubrna 34', postalCode=32158, city='Tallin'}
+2023-10-29 22:44:00.725 [http-nio-8585-exec-8] INFO  MyLogger - Customer saved: Customer{id=0, userName='lasse', password='lasse', firstName='Lasse', lastName='Kongo', email='LK@AB.se)', phone=34654984, dateOfBirth='3/8-1978', address=Address{id=2, street='skrubrna 34', postalCode=32158, city='Tallin'}, tripList=[]}
+2023-10-29 22:44:22.561 [http-nio-8585-exec-9] INFO  MyLogger - Address was edited 
+From: Address{id=2, street='skrubrna 34', postalCode=32158, city='Tallin'}
+To: Address{id=2, street='hhh 34', postalCode=32158, city='Tallin'}
+2023-10-29 22:44:22.562 [http-nio-8585-exec-9] INFO  MyLogger - Address was saved: Address{id=2, street='hhh 34', postalCode=32158, city='Tallin'}
+2023-10-29 22:44:22.562 [http-nio-8585-exec-9] INFO  MyLogger - Customer saved: Customer{id=0, userName='lasse', password='lasse', firstName='Lasse', lastName='Kongo', email='LK@AB.se)', phone=34654984, dateOfBirth='3/8-1978', address=Address{id=2, street='hhh 34', postalCode=32158, city='Tallin'}, tripList=[]}
+2023-10-29 22:45:44.671 [http-nio-8585-exec-1] INFO  MyLogger - Address was edited 
+From: Address{id=2, street='hhh 34', postalCode=32158, city='Tallin'}
+To: Address{id=2, street='hhh 34', postalCode=32158, city='Tallin'}
+2023-10-29 22:45:44.672 [http-nio-8585-exec-1] INFO  MyLogger - Address was saved: Address{id=2, street='hhh 34', postalCode=32158, city='Tallin'}
+2023-10-29 22:45:44.678 [http-nio-8585-exec-1] INFO  MyLogger - Customer edited 
+From: Customer{id=6, userName='lasse', password='lasse', firstName='LasseLiten', lastName='Kongo', email='LK@AB.se)', phone=34654984, dateOfBirth='3/8-1978', address=Address{id=2, street='hhh 34', postalCode=32158, city='Tallin'}, tripList=[]}
+To: Customer{id=6, userName='lasse', password='lasse', firstName='LasseLiten', lastName='Kongo', email='LK@AB.se)', phone=34654984, dateOfBirth='3/8-1978', address=Address{id=2, street='hhh 34', postalCode=32158, city='Tallin'}, tripList=[]}
+2023-10-29 22:45:44.679 [http-nio-8585-exec-1] INFO  MyLogger - Address was edited 
+From: Address{id=2, street='hhh 34', postalCode=32158, city='Tallin'}
+To: Address{id=2, street='hhh 34', postalCode=32158, city='Tallin'}
+2023-10-29 22:45:44.679 [http-nio-8585-exec-1] INFO  MyLogger - Address was saved: Address{id=2, street='hhh 34', postalCode=32158, city='Tallin'}
+2023-10-29 22:45:44.691 [http-nio-8585-exec-1] INFO  MyLogger - Customer saved: Customer{id=6, userName='lasse', password='lasse', firstName='LasseLiten', lastName='Kongo', email='LK@AB.se)', phone=34654984, dateOfBirth='3/8-1978', address=Address{id=2, street='hhh 34', postalCode=32158, city='Tallin'}, tripList=[]}
+2023-10-29 22:46:18.374 [http-nio-8585-exec-5] INFO  MyLogger - Address was edited 
+From: Address{id=4, street='Tjädervägen 14', postalCode=484848, city='Sundsvall'}
+To: Address{id=4, street='Tjädervägen 14', postalCode=484848, city='Sundsvall'}
+2023-10-29 22:46:18.375 [http-nio-8585-exec-5] INFO  MyLogger - Address was saved: Address{id=4, street='Tjädervägen 14', postalCode=484848, city='Sundsvall'}
+2023-10-29 22:46:18.375 [http-nio-8585-exec-5] INFO  MyLogger - Customer saved: Customer{id=5, userName='master', password='master', firstName='Master', lastName='Wigell', email='wigell@wigell.se', phone=46843216, dateOfBirth='8/5-1978', address=Address{id=4, street='Tjädervägen 14', postalCode=484848, city='Sundsvall'}, tripList=[]}
+2023-10-29 22:46:18.426 [http-nio-8585-exec-5] INFO  MyLogger - Customer deleted: Customer{id=5, userName='master', password='master', firstName='Master', lastName='Wigell', email='wigell@wigell.se', phone=46843216, dateOfBirth='8/5-1978', address=Address{id=4, street='Tjädervägen 14', postalCode=484848, city='Sundsvall'}, tripList=[]}
+2023-10-29 22:46:18.440 [http-nio-8585-exec-5] INFO  MyLogger - Address was deleted: Address{id=4, street='Tjädervägen 14', postalCode=484848, city='Sundsvall'}
