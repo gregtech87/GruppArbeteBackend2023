@@ -69,16 +69,6 @@ public class CustomerServiceImpl implements CustomerService {
         return customerRepository.save(customer);
     }
 
-//    @Override
-//    public Customer updateCustomer(Customer customers, int id) {
-//        Customer c = customerRepository.findById(id).orElseThrow(()-> new RuntimeException("Kunde inte finna medlem "+ customers +" med Id: "+id));
-//        c.setUsername(customers.getUsername());
-//        c.setName(customers.getName());
-//        c.setAddress(customers.getAddress());
-//        customerRepository.save(c);
-//        return c;
-//    }
-
     @Override
     public Customer updateCustomer(int id, Customer customer) {
         Customer customerFromDb = findCustomerById(id);

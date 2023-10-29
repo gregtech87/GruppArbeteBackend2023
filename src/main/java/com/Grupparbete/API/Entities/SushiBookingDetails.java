@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "booking_details")
+@Table(name = "sushi_booking_details")
 public class SushiBookingDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,14 +17,14 @@ public class SushiBookingDetails {
     private Customer customer;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "booking_id")
+    @JoinColumn(name = "sushi_booking_id")
     private SushiBooking booking;
 
     @Column(name = "guests")
     private int guests;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "room_id")
+    @JoinColumn(name = "sushi_room_id")
     private SushiRoom room;
 
     @ManyToOne(fetch = FetchType.EAGER)

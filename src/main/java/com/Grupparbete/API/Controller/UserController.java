@@ -77,6 +77,21 @@ public class UserController {
         }
     }
 
+    @PostMapping("/bookings")
+    public CinemaBooking saveBooking(@RequestBody CinemaBooking booking) {
+        booking.setId(0);
+        int totalPrice = cinemaBookingService.calculateTotalPrice(booking);
+        booking.setTotalprice(totalPrice);
+        try {
+            booking.setTotalpriceusd((int) CurrencyConverter.SekToRequestedCurrency(booking.getTotalprice(), "USD"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        CinemaBooking savedBooking = cinemaBookingService.saveBooking(booking);
+        logger.info("Customer saved a booking with id: " + savedBooking.getId());
+        return savedBooking;
+    }
+
     @PutMapping("/bookings/{id}")
     public ResponseEntity<String> updateBooking(@PathVariable int id, @RequestBody BookingRequestDTO updatedBookingRequestDTO) {
         int room = updatedBookingRequestDTO.getRoomId();
@@ -98,6 +113,14 @@ public class UserController {
         }
     }
 
+    @PutMapping("bookings/{id}")
+    public CinemaBooking updateBooking(@PathVariable int id, @RequestBody CinemaBooking s){
+        logger.info("Customer updated booking with ID " + id);
+        CinemaBooking booking = saveBooking(s);
+        s.setId(id);
+        return booking;
+    }
+
     @GetMapping("/bookings/{id}")
     public ResponseEntity<ShowBookingDTO> getBookingWithAllData(@PathVariable int id) {
         ShowBookingDTO showBookingDTO = sushiBookingService.getBookingWithDetails(id);
@@ -107,6 +130,11 @@ public class UserController {
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
+    }
+
+    @GetMapping("/bookings/{id}")
+    public Optional<CinemaBooking> getBooking(@PathVariable int id) {
+        return cinemaBookingService.findById(id);
     }
 
     @GetMapping("/trips")
@@ -133,34 +161,5 @@ public class UserController {
     }
 
 
-    @PostMapping("/bookings")
-    public CinemaBooking saveBooking(@RequestBody CinemaBooking booking) {
-        booking.setId(0);
-        int totalPrice = cinemaBookingService.calculateTotalPrice(booking);
-        booking.setTotalprice(totalPrice);
-        try {
-            booking.setTotalpriceusd((int) CurrencyConverter.SekToRequestedCurrency(booking.getTotalprice(), "USD"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-
-        CinemaBooking savedBooking = cinemaBookingService.saveBooking(booking);
-        logger.info("Customer saved a booking with id: " + savedBooking.getId());
-        return savedBooking;
-    }
-
-
-    @PutMapping("bookings/{id}")
-    public CinemaBooking updateBooking(@PathVariable int id, @RequestBody CinemaBooking s){
-        logger.info("Customer updated booking with ID " + id);
-        CinemaBooking booking = saveBooking(s);
-        s.setId(id);
-        return booking;
-    }
-    @GetMapping("/bookings/{id}")
-    public Optional<CinemaBooking> getBooking(@PathVariable int id) {
-        return cinemaBookingService.findById(id);
-    }
 }
 

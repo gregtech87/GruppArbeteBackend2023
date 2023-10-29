@@ -17,7 +17,7 @@ public class SushiBooking {
     private int guests;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "room_id")
+    @JoinColumn(name = "sushi_room_id")
     private SushiRoom room;
 
     @Column(name = "booking_date")
