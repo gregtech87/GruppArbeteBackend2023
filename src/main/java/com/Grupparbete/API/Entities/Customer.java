@@ -43,6 +43,14 @@ public class Customer {
     public Customer() {
     }
 
+     //Konstruktor av sebbeCool
+    public Customer(String firstName, String lastName, String email, Address address) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.address = address;
+    }
+
     public int getCustomerId() {
         return customerId;
     }
