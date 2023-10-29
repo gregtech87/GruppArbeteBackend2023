@@ -37,10 +37,6 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/v1/bookings").hasRole("USER")
 
                         //SUSHI
-                        .requestMatchers(HttpMethod.GET,"/api/v1/customers").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.POST,"/api/v1/customers").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE,"/api/v1/customers/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.PUT,"/api/v1/customers/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET,"/api/v1/sushis").hasAnyRole("ADMIN","USER")
                         .requestMatchers(HttpMethod.POST,"/api/v1/sushis").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE,"/api/v1/sushis/**").hasRole("ADMIN")
@@ -55,14 +51,21 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST,"/api/v1/rent_bike").hasRole("USER")
                         .requestMatchers(HttpMethod.PUT,"/api/v1/booking/**").hasRole("USER")
                         .requestMatchers(HttpMethod.GET,"/api/v1/bikes/**").hasRole("USER")
-                        .requestMatchers(HttpMethod.GET, "/api/v1/mccustomers").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/api/v1/mccustomers").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/v1/mccustomers/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "api/v1/mccustomers/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "api/v1/mcbookings/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "api/v1/bike").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "api/v1//bike/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "api/v1/allBikes").hasRole("ADMIN")
+
+                        //Travel
+                        .requestMatchers(HttpMethod.GET, "/api/v1/trips").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/v1/trips/{id}").hasRole("USER")
+                        .requestMatchers(HttpMethod.POST, "/api/v1/trips").hasRole("USER")
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/trips/{id}").hasRole("USER")
+                        .requestMatchers(HttpMethod.POST, "/api/v1/destination").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/destination/{id}").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/destination/{id}").hasRole("ADMIN")
         );
         http.httpBasic(Customizer.withDefaults());
         http.csrf(csrf -> csrf.disable());
