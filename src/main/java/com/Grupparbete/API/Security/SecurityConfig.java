@@ -49,6 +49,20 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST,"/api/v1/bookings").hasRole("USER")
                         .requestMatchers(HttpMethod.PUT,"/api/v1/bookings/**").hasRole("USER")
                         .requestMatchers(HttpMethod.GET,"/api/v1/bookings/**").hasRole("USER")
+
+                        //Mc rental
+                        .requestMatchers(HttpMethod.GET, "/api/v1/available_bikes").hasRole("USER")
+                        .requestMatchers(HttpMethod.POST,"/api/v1/rent_bike").hasRole("USER")
+                        .requestMatchers(HttpMethod.PUT,"/api/v1/booking/**").hasRole("USER")
+                        .requestMatchers(HttpMethod.GET,"/api/v1/bikes/**").hasRole("USER")
+                        .requestMatchers(HttpMethod.GET, "/api/v1/customers").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/v1/customers").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/customers/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "api/v1/customers/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "api/v1/bookings/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "api/v1/bike").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "api/v1//bike/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "api/v1/allBikes").hasRole("ADMIN")
         );
         http.httpBasic(Customizer.withDefaults());
         http.csrf(csrf -> csrf.disable());
