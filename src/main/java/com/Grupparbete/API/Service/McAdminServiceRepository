@@ -1,3 +1,4 @@
+package com.Grupparbete.API.Service;
 
 import com.Grupparbete.API.Entities.Customer;
 import com.Grupparbete.API.Entities.McBooking;
