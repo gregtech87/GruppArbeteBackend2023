@@ -22,16 +22,16 @@ public class SushiBookingServiceImpl implements SushiBookingService {
     private SushiBookingRepository bookingRepository;
     private CustomerService customerService;
     private SushiDishesService sushiDishesService;
-    private SushiRoomService roomService;
+    private SushiRoomService sushiRoomService;
     private BookingDetailsRepository bookingDetailsRepository;
 
 
     @Autowired
-    public SushiBookingServiceImpl(SushiBookingRepository bookingRepository, CustomerService custService, SushiDishesService dishService, SushiRoomService roomService, BookingDetailsRepository bookDetailsRepository) {
+    public SushiBookingServiceImpl(SushiBookingRepository bookingRepository, CustomerService custService, SushiDishesService dishService, SushiRoomService sushiRoomService, BookingDetailsRepository bookDetailsRepository) {
         this.bookingRepository = bookingRepository;
         customerService = custService;
         sushiDishesService = dishService;
-        roomService = roomService;
+        this.sushiRoomService = sushiRoomService;
         bookingDetailsRepository = bookDetailsRepository;
     }
 
@@ -97,12 +97,12 @@ public class SushiBookingServiceImpl implements SushiBookingService {
     @Override
     public SushiBooking updateReservation(int bookingId,int roomId, int guests, List<Integer> dishIds, List<Integer> quantities) {
         Optional<SushiBooking> existingBookingOptional = bookingRepository.findById(bookingId);
-        int guestsInRoom = roomService.getGuestsInRoom(roomId);
+        int guestsInRoom = sushiRoomService.getGuestsInRoom(roomId);
 
         if (existingBookingOptional.isEmpty()) {
             throw new IllegalArgumentException("Bokningen finns inte.");
         }
-        SushiRoom room = roomService.findRoomById(roomId);
+        SushiRoom room = sushiRoomService.findRoomById(roomId);
 
         if (guestsInRoom + guests > room.getMaxGuests()) {
             throw new IllegalArgumentException("För många gäster för det valda rummet.");
@@ -176,13 +176,13 @@ public class SushiBookingServiceImpl implements SushiBookingService {
     @Override
     public SushiBooking createReservation(int customerId, int roomId, int guests, List<Integer> dishIds, List<Integer> quantities) {
         Customer customer = customerService.findCustomerById(customerId);
-        int guestsInRoom = roomService.getGuestsInRoom(roomId);
+        int guestsInRoom = sushiRoomService.getGuestsInRoom(roomId);
 
         if (customer == null) {
             throw new IllegalArgumentException("Felaktigt kund-ID.");
         }
 
-        SushiRoom room = roomService.findRoomById(roomId);
+        SushiRoom room = sushiRoomService.findRoomById(roomId);
 
         if (room == null) {
             throw new IllegalArgumentException("Felaktigt rum-ID: " + roomId);

@@ -43,11 +43,11 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET,"/api/v1/sushis").hasAnyRole("ADMIN","USER")
                         .requestMatchers(HttpMethod.POST,"/api/v1/sushis").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE,"/api/v1/sushis/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.PUT,"/api/v1/rooms/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT,"/api/v1/sushirooms/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST,"/api/v1/ordersushis").hasRole("USER")
-                        .requestMatchers(HttpMethod.POST,"/api/v1/bookings").hasRole("USER")
-                        .requestMatchers(HttpMethod.PUT,"/api/v1/bookings/**").hasRole("USER")
-                        .requestMatchers(HttpMethod.GET,"/api/v1/bookings/**").hasRole("USER")
+                        .requestMatchers(HttpMethod.POST,"/api/v1/sushibookings").hasRole("USER")
+                        .requestMatchers(HttpMethod.PUT,"/api/v1/sushibookings/**").hasRole("USER")
+                        .requestMatchers(HttpMethod.GET,"/api/v1/sushibookings/**").hasRole("USER")
 
                         //Mc rental
                         .requestMatchers(HttpMethod.GET, "/api/v1/available_bikes").hasRole("USER")

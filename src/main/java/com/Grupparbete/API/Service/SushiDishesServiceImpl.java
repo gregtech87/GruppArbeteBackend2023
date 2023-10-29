@@ -36,7 +36,7 @@ public class SushiDishesServiceImpl implements SushiDishesService {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            double priceInYEN = priceInSEK * exchangeRate;
+            double priceInYEN = exchangeRate;
             int priceInYENRoundedUp = (int) Math.ceil(priceInYEN);
             dish.setYenPrice(priceInYENRoundedUp);
         });
