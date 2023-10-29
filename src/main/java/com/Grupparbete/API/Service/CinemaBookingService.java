@@ -8,5 +8,5 @@ public interface CinemaBookingService {
 
     CinemaBooking saveBooking(CinemaBooking booking);
     Optional<CinemaBooking> findById(int id);
-    int calculateTotalPrice(CinemaBooking booking);
+      int calculateTotalPrice(CinemaBooking booking);
 }

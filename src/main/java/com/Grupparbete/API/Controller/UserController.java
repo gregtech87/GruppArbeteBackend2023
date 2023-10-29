@@ -1,17 +1,12 @@
 package com.Grupparbete.API.Controller;
 
+import com.Grupparbete.API.CurrencyConverter;
 import com.Grupparbete.API.DTO.BookingRequestDTO;
 import com.Grupparbete.API.DTO.OrderItemDTO;
 import com.Grupparbete.API.DTO.OrderRequestDTO;
 import com.Grupparbete.API.DTO.ShowBookingDTO;
-import com.Grupparbete.API.Entities.Destination;
-import com.Grupparbete.API.Entities.Order;
-import com.Grupparbete.API.Entities.SushiBooking;
-import com.Grupparbete.API.Entities.Trip;
-import com.Grupparbete.API.Service.TripDestinationService;
-import com.Grupparbete.API.Service.SushiOrderService;
-import com.Grupparbete.API.Service.SushiBookingService;
-import com.Grupparbete.API.Service.TripService;
+import com.Grupparbete.API.Entities.*;
+import com.Grupparbete.API.Service.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +14,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -30,6 +27,10 @@ public class UserController {
     private SushiOrderService sushiOrderService;
     private TripService tripService;
     private TripDestinationService tripDestinationService;
+    private CinemaRoomService CinemaRoomService;
+
+    private CinemaBookingService cinemaBookingService;
+    private CinemaRoomService cinemaRoomService;
 
 
 
@@ -131,4 +132,36 @@ public class UserController {
     public Trip updateTrip(@PathVariable int id, @RequestBody Trip trip) {
         return tripService.update(id, trip);
     }
+
+
+    @PostMapping("/bookings")
+    public CinemaBooking saveBooking(@RequestBody CinemaBooking booking) {
+        booking.setId(0);
+        int totalPrice = cinemaBookingService.calculateTotalPrice(booking);
+        booking.setTotalprice(totalPrice);
+        try {
+            booking.setTotalpriceusd((int) CurrencyConverter.SekToRequestedCurrency(booking.getTotalprice(), "USD"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+
+        CinemaBooking savedBooking = cinemaBookingService.saveBooking(booking);
+        logger.info("Customer saved a booking with id: " + savedBooking.getId());
+        return savedBooking;
+    }
+
+
+    @PutMapping("bookings/{id}")
+    public CinemaBooking updateBooking(@PathVariable int id, @RequestBody CinemaBooking s){
+        logger.info("Customer updated booking with ID " + id);
+        CinemaBooking booking = saveBooking(s);
+        s.setId(id);
+        return booking;
+    }
+    @GetMapping("/bookings/{id}")
+    public Optional<CinemaBooking> getBooking(@PathVariable int id) {
+        return cinemaBookingService.findById(id);
+    }
 }
+
