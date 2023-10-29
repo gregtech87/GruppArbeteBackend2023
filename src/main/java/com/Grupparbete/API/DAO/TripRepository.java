@@ -11,8 +11,8 @@ import java.util.List;
 
 public interface TripRepository extends JpaRepository<Trip, Integer> {
 
-@Query("SELECT t FROM Customer c JOIN c.trips t WHERE c.customerId = :customerId AND t.tripId = :departureDate")
-Trip findTripByCustomerIdAndDepartureDate(@Param("departureDate") int tripId, @Param("customerId") int customerId);
+    @Query("SELECT t FROM Customer c JOIN c.trips t WHERE c.customerId = :customerId AND t.tripId = :departureDate")
+    Trip findTripByCustomerIdAndDepartureDate(@Param("departureDate") int tripId, @Param("customerId") int customerId);
 
 
     @Query("SELECT t FROM Customer c JOIN c.trips t WHERE c.customerId = :customerId")

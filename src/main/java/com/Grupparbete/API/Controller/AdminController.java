@@ -51,7 +51,6 @@ public class AdminController {
         return customerService.findAllCustomers();
     }
 
-    // Tobbe
     @PostMapping("/customers")
     public Customer saveCustomer(@RequestBody Customer customer) {
         if (customer.getCustomerId() > 0){
@@ -60,86 +59,16 @@ public class AdminController {
         return customerService.saveCustomer(customer);
     }
 
-
-    //Tobbe
     @PutMapping("/customers/{id}")
     public Customer updateCustomer(@PathVariable int id, @RequestBody Customer customer){
         return customerService.updateCustomer(id, customer);
     }
 
-    //    @PutMapping("customers/{id}")
-//    public Customer updateCustomer(@PathVariable int id, @RequestBody Customer s) {
-//        logger.info("admin updated customer with ID " + id);
-//        s.setId(id);
-//        Customer customer = customerService.saveCustomer(s);
-//        return customer;
-//    }
-
-    //Rickard
-//    @PutMapping("/customers/{id}")
-//    public ResponseEntity<String> updateCustomer(@RequestBody Customer updatedCustomer, @PathVariable int id) {
-//        Customer existingCustomer = customerService.findCustomerById(id);
-//        if (existingCustomer == null) {
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-//                    .body("Kund med ID: " + id + " finns inte");
-//        }
-//
-//        existingCustomer.setUsername(updatedCustomer.getUsername());
-//        existingCustomer.setName(updatedCustomer.getName());
-//
-//        Address updatedAddress = updatedCustomer.getAddress();
-//        Address existingAddress = existingCustomer.getAddress();
-//
-//        if (existingAddress != null && !existingAddress.equals(updatedAddress)) {
-//            Address matchingAddress = addressService.findAddressByStreetAndPostalCodeAndCity(
-//                    updatedAddress.getStreet(), updatedAddress.getPostalCode(), updatedAddress.getCity()
-//            );
-//
-//            if (matchingAddress != null) {
-//                existingCustomer.setAddress(matchingAddress);
-//            } else {
-//                existingAddress.setStreet(updatedAddress.getStreet());
-//                existingAddress.setPostalCode(updatedAddress.getPostalCode());
-//                existingAddress.setCity(updatedAddress.getCity());
-//            }
-//        } else if (existingAddress == null) {
-//            Address newAddress = addressService.saveAddress(updatedAddress);
-//            existingCustomer.setAddress(newAddress);
-//        }
-//
-//        Customer updatedCustomerResult = customerService.saveCustomer(existingCustomer);
-//
-//        if (existingAddress != null) {
-//            List<Customer> customersWithSameAddress = customerService.findCustomersByAddressId(existingAddress.getId());
-//            if (customersWithSameAddress.size() == 0) {
-//                addressService.deleteAddressById(existingAddress.getId());
-//            }
-//        }
-//        logger.info("Admin updated customer with ID: " + id);
-//        return ResponseEntity.ok("Kund med ID: " + id + " har uppdaterats.");
-//    }
-
-
-
-
-//    @DeleteMapping("/customers/{id}")
-//    public String deleteCustomer(@PathVariable int id) {
-//        logger.info("admin deleted customer with ID " + id);
-//        customerService.deleteCustomerById(id);
-//        return "kund med id " + id + " har raderats";
-//    }
-
-
-
-    //Tobbe
     @DeleteMapping("/customers/{id}")
     public String deleteCustomer(@PathVariable int id) {
         customerService.deleteCustomerById(id);
         return ("Customer with id: " + id + " has been deleted!");
     }
-
-
-
 
     @PostMapping("/movies")
     public Movie saveMovie(@RequestBody Movie movie) {
@@ -167,9 +96,6 @@ public class AdminController {
         CinemaRoom updatedRoom = cinemaRoomService.saveRoom(s);
         return updatedRoom;
     }
-
-
-
 
     @PostMapping("/sushis")
     public Dishes addDish(@RequestBody Dishes dish) {

@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 public class CinemaBooking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "cinema_booking_id")
     private int id;
     @Column(name = "guests")
     private int guests;
