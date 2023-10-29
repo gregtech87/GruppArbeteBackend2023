@@ -1,3 +1,5 @@
+package com.Grupparbete.API.DAO;
+
 import com.Grupparbete.API.Entities.Motorcycle;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
