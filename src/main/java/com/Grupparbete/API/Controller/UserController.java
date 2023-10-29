@@ -27,18 +27,20 @@ public class UserController {
     private SushiOrderService sushiOrderService;
     private TripService tripService;
     private TripDestinationService tripDestinationService;
-    private CinemaRoomService CinemaRoomService;
-    private CinemaBookingService cinemaBookingService;
     private CinemaRoomService cinemaRoomService;
+    private CinemaBookingService cinemaBookingService;
+
 
 
 
     @Autowired
-    public UserController(SushiBookingService sushiBookingService, SushiOrderService sushiOrderService, TripService tripService, TripDestinationService tripDestinationService, CinemaRoomService CinemaRoomService) {
+    public UserController(SushiBookingService sushiBookingService, SushiOrderService sushiOrderService, TripService tripService, TripDestinationService tripDestinationService, CinemaRoomService cinemaRoomService, CinemaBookingService cinemaBookingService) {
         this.sushiBookingService = sushiBookingService;
         this.sushiOrderService = sushiOrderService;
         this.tripService = tripService;
         this.tripDestinationService = tripDestinationService;
+        this.cinemaRoomService = cinemaRoomService;
+        this.cinemaBookingService = cinemaBookingService;
     }
 
 

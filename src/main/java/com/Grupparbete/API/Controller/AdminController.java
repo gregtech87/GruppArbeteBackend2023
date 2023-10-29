@@ -30,9 +30,10 @@ public class AdminController {
     private SushiRoomService sushiRoomService;
     private SushiBookingService bookingService;
     private SushiOrderService sushiOrderService;
+    private McAdminServiceRepository mcAdminServiceRepository;
 
     @Autowired
-    public AdminController(CinemaMovieService cinemaMovieService, CinemaRoomService cinemaRoomService, CustomerService customerService, SushiDishesService sushiDishesService, SushiRoomService sushiRoomService, SushiBookingService sushiBookingService, SushiOrderService sushiOrderService){
+    public AdminController(CinemaMovieService cinemaMovieService, CinemaRoomService cinemaRoomService, CustomerService customerService, SushiDishesService sushiDishesService, SushiRoomService sushiRoomService, SushiBookingService sushiBookingService, SushiOrderService sushiOrderService, McAdminServiceRepository mcAdminServiceRepository){
         this.cinemaMovieService = cinemaMovieService;
         this.cinemaRoomService = cinemaRoomService;
         this.customerService = customerService;
@@ -40,6 +41,7 @@ public class AdminController {
         this.sushiRoomService = sushiRoomService;
         this.bookingService = sushiBookingService;
         this.sushiOrderService = sushiOrderService;
+        this.mcAdminServiceRepository = mcAdminServiceRepository;
     }
 
     @GetMapping("/customers")
@@ -85,7 +87,7 @@ public class AdminController {
         return cinemaMovieService.findAllMovies();
     }
 
-    @PutMapping("rooms/{id}")
+    @PutMapping("cinemarooms/{id}")
     public CinemaRoom updateCinemaRoom(@PathVariable int id, @RequestBody CinemaRoom s) {
         logger.info("admin updated room with ID " + id);
         s.setId(id);
@@ -93,7 +95,7 @@ public class AdminController {
         return updatedRoom;
     }
 
-    @PutMapping("/rooms/{id}")
+    @PutMapping("sushirooms/{id}")
     public ResponseEntity<String> updateSushiRoom(@RequestBody SushiRoom updatedRoom, @PathVariable int id) {
         SushiRoom existingRoom = sushiRoomService.findRoomById(id);
         if (existingRoom == null) {
