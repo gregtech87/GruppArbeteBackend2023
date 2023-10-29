@@ -1,3 +1,4 @@
+package com.Grupparbete.API.DAO;
 
 import com.Grupparbete.API.Entities.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
