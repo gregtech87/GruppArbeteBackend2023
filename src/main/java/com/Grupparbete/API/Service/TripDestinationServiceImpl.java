@@ -56,7 +56,7 @@ public class TripDestinationServiceImpl implements TripDestinationService {
         destinationFromDb.setCity(destination.getCity());
         destinationFromDb.setCountry(destination.getCountry());
         destination.setId(id);
-        logger.info("Destination edited from: " + destination + "\nTo: " + destinationFromDb);
+        logger.info("Destination edited \nFrom: " + destination + "\nTo: " + destinationFromDb);
         return save(destinationFromDb);
     }
 
@@ -86,36 +86,18 @@ public class TripDestinationServiceImpl implements TripDestinationService {
     @Override
     @Transactional
     public Destination checkIfExistsInDatabaseIfNotSave(Destination destination, boolean autoSave) {
-        final Destination baseLineDestination = new Destination();
-        baseLineDestination.setId(destination.getId());
-        baseLineDestination.setCity(destination.getCity());
-        baseLineDestination.setCountry(destination.getCountry());
-        baseLineDestination.setPricePerWeek(destination.getPricePerWeek());
-        baseLineDestination.setHotellName(destination.getHotellName());
 
         String city = destination.getCity();
         String country = destination.getCountry();
         String hotellName = destination.getHotellName();
-        System.out.println("###############################################################################");
-        System.out.println("INKOMMANDE: " + destination);
 
+        if (destination.getId() > 0){
+            return updateDestination(destination.getId(),destination);
+        }
         Destination destinationFromDatabase = destinationRepository.findDestinationByHotellNameAndCityAndCountry(hotellName, city, country);
         if (destinationFromDatabase != null){
             System.out.println("FRÅN DB: " + destinationFromDatabase);
             return destinationFromDatabase;
-        }
-        if (baseLineDestination.getId() > 0){
-            destinationFromDatabase = findById(baseLineDestination.getId());
-
-            Destination newDestination = new Destination();
-            newDestination.setId(destinationFromDatabase.getId());
-            newDestination.setCity(destination.getCity());
-            newDestination.setCountry(destination.getCountry());
-            newDestination.setPricePerWeek(destination.getPricePerWeek());
-            newDestination.setHotellName(destination.getHotellName());
-
-            logger.info("Destination was edited \nfrom: " + destinationFromDatabase + "\nTo: " + newDestination);
-            return save(newDestination);
         }
         if(autoSave){
             destinationFromDatabase = save(destination);
