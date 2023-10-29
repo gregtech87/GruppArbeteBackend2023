@@ -3,6 +3,9 @@ package com.Grupparbete.API.Controller;
 import com.Grupparbete.API.CurrencyConverter;
 import com.Grupparbete.API.Entities.*;
 import com.Grupparbete.API.Service.*;
+import com.Grupparbete.API.exceptions.McBookingNotFoundException;
+import com.Grupparbete.API.exceptions.McCustomerNotFoundException;
+import com.Grupparbete.API.exceptions.MotorcycleNotFoundException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -194,7 +197,7 @@ public class AdminController {
     }
 
     //sebbe
-    @DeleteMapping("/bookings/{id}")
+    @DeleteMapping("/mcbookings/{id}")
     public String deleteBooking(@PathVariable int id){
         Optional<McBooking> booking  = mcAdminServiceRepository.findBookingById(id);
 
@@ -222,8 +225,8 @@ public class AdminController {
     }
 
     //sebbe
-    @PutMapping("/customers/{id}")
-    public Customer updateCustomer(@PathVariable int id, @RequestBody Customer customer){
+    @PutMapping("/mccustomers/{id}")
+    public Customer updateMcCustomer(@PathVariable int id, @RequestBody Customer customer){
         Optional<Customer> c = mcAdminServiceRepository.findCustomerById(id);
         if(!c.isPresent()){
             logger.error("Kund med id: " + id + " finns inte i databasen.");
@@ -244,19 +247,6 @@ public class AdminController {
         }
         logger.info("Admin tog bort kund med id: " + id);
         return mcAdminServiceRepository.deleteCustomerById(id);
-    }
-    //sebbe
-    @PostMapping("/customers")
-    public Customer addCustomer(@RequestBody Customer customer){
-
-        customer.setCustomerId(0);
-        logger.info("Admin la till ny kund: " + customer.toString());
-        return mcAdminServiceRepository.save(customer);
-    }
-    //sebbe
-    @GetMapping("/customers")
-    public List<Customer> getAllCustomers(){
-        return mcAdminServiceRepository.getAllCustomers();
     }
 
 
