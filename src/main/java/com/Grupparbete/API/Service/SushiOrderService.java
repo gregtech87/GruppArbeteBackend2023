@@ -7,7 +7,7 @@ import com.Grupparbete.API.Entities.OrderDetails;
 
 import java.util.List;
 
-public interface OrderService {
+public interface SushiOrderService {
     Order saveOrder(Order order);
     Order createTakeawayOrder(int customerId, List<OrderItemDTO> orderItemDTOS);
     void deleteOrder(int id);

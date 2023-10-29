@@ -8,8 +8,8 @@ import com.Grupparbete.API.Entities.Destination;
 import com.Grupparbete.API.Entities.Order;
 import com.Grupparbete.API.Entities.SushiBooking;
 import com.Grupparbete.API.Entities.Trip;
-import com.Grupparbete.API.Service.DestinationService;
-import com.Grupparbete.API.Service.OrderService;
+import com.Grupparbete.API.Service.TripDestinationService;
+import com.Grupparbete.API.Service.SushiOrderService;
 import com.Grupparbete.API.Service.SushiBookingService;
 import com.Grupparbete.API.Service.TripService;
 import org.apache.logging.log4j.LogManager;
@@ -27,18 +27,18 @@ public class UserController {
     private static final Logger logger = LogManager.getLogger("MyLogger");
 
     private SushiBookingService sushiBookingService;
-    private OrderService orderService;
+    private SushiOrderService sushiOrderService;
     private TripService tripService;
-    private DestinationService destinationService;
+    private TripDestinationService tripDestinationService;
 
 
 
     @Autowired
-    public UserController(SushiBookingService sushiBookingService, OrderService orderService, TripService tripService, DestinationService destinationService) {
+    public UserController(SushiBookingService sushiBookingService, SushiOrderService sushiOrderService, TripService tripService, TripDestinationService tripDestinationService) {
         this.sushiBookingService = sushiBookingService;
-        this.orderService = orderService;
+        this.sushiOrderService = sushiOrderService;
         this.tripService = tripService;
-        this.destinationService = destinationService;
+        this.tripDestinationService = tripDestinationService;
     }
 
 
@@ -47,7 +47,7 @@ public class UserController {
         int customerId = orderRequestDTO.getCustomerId();
         List<OrderItemDTO> orderItemDTOS = orderRequestDTO.getOrders();
 
-        Order order = orderService.createTakeawayOrder(customerId, orderItemDTOS);
+        Order order = sushiOrderService.createTakeawayOrder(customerId, orderItemDTOS);
 
         if (order == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Något gick fel vid beställningen.");
@@ -111,12 +111,12 @@ public class UserController {
 
     @GetMapping("/trips")
     public List<Destination> findAllDestinations() {
-        return destinationService.findAll();
+        return tripDestinationService.findAll();
     }
 
     @GetMapping("/trips/{id}")
     public Destination getTrip(@PathVariable int id) {
-        return destinationService.findById(id);
+        return tripDestinationService.findById(id);
     }
 
     @PostMapping("/trips")

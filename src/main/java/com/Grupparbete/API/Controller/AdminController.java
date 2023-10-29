@@ -27,23 +27,23 @@ public class AdminController {
 //    @Autowired
 //    private CinemaRoomServiceImpl cinemaRoomService;
 
-    private MovieService movieService;
+    private CinemaMovieService cinemaMovieService;
     private CinemaRoomService cinemaRoomService;
     private CustomerService customerService;
-    private DishesService dishesService;
+    private SushiDishesService sushiDishesService;
     private SushiRoomService sushiRoomService;
     private SushiBookingService bookingService;
-    private OrderService orderService;
+    private SushiOrderService sushiOrderService;
 
     @Autowired
-    public AdminController(MovieService movieService, CinemaRoomService cinemaRoomService, CustomerService customerService, DishesService dishesService, SushiRoomService sushiRoomService, SushiBookingService sushiBookingService, OrderService orderService){
-        this.movieService = movieService;
+    public AdminController(CinemaMovieService cinemaMovieService, CinemaRoomService cinemaRoomService, CustomerService customerService, SushiDishesService sushiDishesService, SushiRoomService sushiRoomService, SushiBookingService sushiBookingService, SushiOrderService sushiOrderService){
+        this.cinemaMovieService = cinemaMovieService;
         this.cinemaRoomService = cinemaRoomService;
         this.customerService = customerService;
-        this.dishesService = dishesService;
+        this.sushiDishesService = sushiDishesService;
         this.sushiRoomService = sushiRoomService;
         this.bookingService = sushiBookingService;
-        this.orderService = orderService;
+        this.sushiOrderService = sushiOrderService;
     }
 
     @GetMapping("/customers")
@@ -145,19 +145,19 @@ public class AdminController {
     public Movie saveMovie(@RequestBody Movie movie) {
         logger.info("admin added movie " + movie.getTitle());
         movie.setId(0);
-        return movieService.saveMovie(movie);
+        return cinemaMovieService.saveMovie(movie);
     }
 
     @DeleteMapping("/movies/{id}")
     public String deleteMovie(@PathVariable int id) {
         logger.info("admin deleted movie with ID " + id);
-        movieService.deleteMovieById(id);
+        cinemaMovieService.deleteMovieById(id);
         return "film med id " + id + " har raderats";
     }
 
     @GetMapping("/movies")
     public List<Movie> getAllMovies() {
-        return movieService.findAllMovies();
+        return cinemaMovieService.findAllMovies();
     }
 
     @PutMapping("rooms/{id}")
@@ -173,21 +173,21 @@ public class AdminController {
 
     @PostMapping("/sushis")
     public Dishes addDish(@RequestBody Dishes dish) {
-        Dishes addedDish = dishesService.addDish(dish);
+        Dishes addedDish = sushiDishesService.addDish(dish);
         logger.info("Admin added a new dish with ID: " + addedDish.getId());
 
-        return dishesService.addDish(dish);
+        return sushiDishesService.addDish(dish);
     }
 
     @DeleteMapping("/sushis/{id}")
     public String deleteDish(@PathVariable int id) {
-        Dishes deletedDish = dishesService.findDishById(id);
+        Dishes deletedDish = sushiDishesService.findDishById(id);
         CurrencyConverter converter = new CurrencyConverter();
         if (deletedDish == null) {
             return "Maträtt med ID " + id + " hittades inte.";
         }
 
-        List<OrderDetails> orderDetailsList = orderService.findOrdersContainingDish(deletedDish);
+        List<OrderDetails> orderDetailsList = sushiOrderService.findOrdersContainingDish(deletedDish);
 
         for (OrderDetails orderDetails : orderDetailsList) {
             int quantity = orderDetails.getQuantity();
@@ -203,13 +203,13 @@ public class AdminController {
             }
         }
 
-        List<BookingDetails> bookingDetailsList = bookingService.findBookingDetailsContainingDish(deletedDish);
+        List<SushiBookingDetails> sushiBookingDetailsList = bookingService.findBookingDetailsContainingDish(deletedDish);
 
-        for (BookingDetails bookingDetails : bookingDetailsList) {
-            int quantity = bookingDetails.getQuantity();
-            double priceSEK = bookingDetails.getPriceSEK();
+        for (SushiBookingDetails sushiBookingDetails : sushiBookingDetailsList) {
+            int quantity = sushiBookingDetails.getQuantity();
+            double priceSEK = sushiBookingDetails.getPriceSEK();
 
-            SushiBooking booking = bookingDetails.getBooking();
+            SushiBooking booking = sushiBookingDetails.getBooking();
             booking.setTotalPriceSEK(booking.getTotalPriceSEK() - priceSEK);
             try {
                 booking.setTotalPriceYEN((int) converter.SekToRequestedCurrency(booking.getTotalPriceSEK(), "JPY"));
@@ -218,7 +218,7 @@ public class AdminController {
             }
         }
 
-        dishesService.deleteDish(id);
+        sushiDishesService.deleteDish(id);
         logger.info("Admin deleted Dish with ID: " + id);
         return "Maträtt med ID " + id + " har tagits bort.";
     }
@@ -247,7 +247,7 @@ public class AdminController {
 
     @GetMapping("/sushis")
     public List<Dishes> findAllDishes() {
-        List<Dishes> dishes = dishesService.findAllDishes();
+        List<Dishes> dishes = sushiDishesService.findAllDishes();
         return dishes;
     }
 }

@@ -1,6 +1,5 @@
 package com.Grupparbete.API.Entities;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 

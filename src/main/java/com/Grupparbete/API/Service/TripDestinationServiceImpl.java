@@ -14,13 +14,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class DestinationServiceImpl implements DestinationService{
+public class TripDestinationServiceImpl implements TripDestinationService {
 
     private final Logger logger = LogManager.getLogger("MyLogger");
     private DestinationRepository destinationRepository;
 
     @Autowired
-    public DestinationServiceImpl(DestinationRepository destinationRepository) {
+    public TripDestinationServiceImpl(DestinationRepository destinationRepository) {
         this.destinationRepository = destinationRepository;
     }
 

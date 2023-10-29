@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import com.Grupparbete.API.Entities.Movie;
 
-    public interface MovieService {
+    public interface CinemaMovieService {
 
         Movie saveMovie(Movie movie);
 

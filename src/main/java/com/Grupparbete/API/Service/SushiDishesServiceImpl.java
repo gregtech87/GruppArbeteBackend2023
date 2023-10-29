@@ -11,11 +11,11 @@ import java.io.IOException;
 import java.util.List;
 
 @Service
-public class DishesServiceImpl implements DishesService {
+public class SushiDishesServiceImpl implements SushiDishesService {
     private DishesRepository dishesRepository;
 
     @Autowired
-    public DishesServiceImpl(DishesRepository dishesRepository) {
+    public SushiDishesServiceImpl(DishesRepository dishesRepository) {
         this.dishesRepository = dishesRepository;
     }
 

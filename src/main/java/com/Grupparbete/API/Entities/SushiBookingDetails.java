@@ -6,7 +6,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "booking_details")
-public class BookingDetails {
+public class SushiBookingDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -44,7 +44,7 @@ public class BookingDetails {
     @Temporal(TemporalType.TIMESTAMP)
     private Date bookingDate;
 
-    public BookingDetails() {
+    public SushiBookingDetails() {
     }
 
     public int getId() {

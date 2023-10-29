@@ -35,7 +35,7 @@ public class SushiBooking {
 
     @JsonIgnore
     @OneToMany(mappedBy = "booking", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<BookingDetails> bookingDetails;
+    private List<SushiBookingDetails> sushiBookingDetails;
 
     public SushiBooking() {
     }
@@ -99,12 +99,12 @@ public class SushiBooking {
         this.customer = customer;
     }
 
-    public List<BookingDetails> getBookingDetails() {
-        return bookingDetails;
+    public List<SushiBookingDetails> getBookingDetails() {
+        return sushiBookingDetails;
     }
 
-    public void setBookingDetails(List<BookingDetails> bookingDetails) {
-        this.bookingDetails = bookingDetails;
+    public void setBookingDetails(List<SushiBookingDetails> sushiBookingDetails) {
+        this.sushiBookingDetails = sushiBookingDetails;
     }
 
     @Override
@@ -117,7 +117,7 @@ public class SushiBooking {
                 ", totalPriceSEK=" + totalPriceSEK +
                 ", totalPriceYEN=" + totalPriceYEN +
                 ", customer=" + customer +
-                ", bookingDetails=" + bookingDetails +
+                ", bookingDetails=" + sushiBookingDetails +
                 '}';
     }
 }

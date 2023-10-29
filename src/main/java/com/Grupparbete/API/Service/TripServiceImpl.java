@@ -20,12 +20,12 @@ public class TripServiceImpl implements TripService {
 
     private final Logger logger = LogManager.getLogger("MyLogger");
     private TripRepository tripRepository;
-    private DestinationService destinationService;
+    private TripDestinationService tripDestinationService;
 
     @Autowired
-    public TripServiceImpl(TripRepository tripRepository, DestinationService destinationService) {
+    public TripServiceImpl(TripRepository tripRepository, TripDestinationService tripDestinationService) {
         this.tripRepository = tripRepository;
-        this.destinationService = destinationService;
+        this.tripDestinationService = tripDestinationService;
     }
 
     @Override
@@ -64,7 +64,7 @@ public class TripServiceImpl implements TripService {
     @Override
     @Transactional
     public Trip save(Trip trip) {
-        trip.setDestination(destinationService.checkIfExistsInDatabaseIfNotSave(trip.getDestination(), true));
+        trip.setDestination(tripDestinationService.checkIfExistsInDatabaseIfNotSave(trip.getDestination(), true));
         trip.setTotalPriceSEK(trip.getDestination().getPricePerWeek() * trip.getNumberOfWeeks());
         try {
             trip.setTotalPricePLN(CurrencyConverter.SekToRequestedCurrency(trip.getTotalPriceSEK(), "PLN"));
@@ -81,7 +81,7 @@ public class TripServiceImpl implements TripService {
         Trip tripFromDb = findById(id);
         Trip newTrip = new Trip();
         newTrip.setTripId(tripFromDb.getTripId());
-        newTrip.setDestination(destinationService.checkIfExistsInDatabaseIfNotSave(trip.getDestination(), true));
+        newTrip.setDestination(tripDestinationService.checkIfExistsInDatabaseIfNotSave(trip.getDestination(), true));
         newTrip.setNumberOfWeeks(trip.getNumberOfWeeks());
         newTrip.setTotalPriceSEK(trip.getTotalPriceSEK());
         newTrip.setTotalPricePLN(trip.getTotalPricePLN());
@@ -133,12 +133,12 @@ public class TripServiceImpl implements TripService {
                 tripFromDatabase.setNumberOfWeeks(trip.getNumberOfWeeks());
                 tripFromDatabase.setTotalPriceSEK(trip.getTotalPriceSEK());
                 tripFromDatabase.setTotalPricePLN(trip.getTotalPricePLN());
-                tripFromDatabase.setDestination(destinationService.checkIfExistsInDatabaseIfNotSave(trip.getDestination(), true));
+                tripFromDatabase.setDestination(tripDestinationService.checkIfExistsInDatabaseIfNotSave(trip.getDestination(), true));
             }
             return tripFromDatabase;
         }
 
-        trip.setDestination(destinationService.checkIfExistsInDatabaseIfNotSave(trip.getDestination(), true));
+        trip.setDestination(tripDestinationService.checkIfExistsInDatabaseIfNotSave(trip.getDestination(), true));
         if (autoSave) {
             trip = save(trip);
         }

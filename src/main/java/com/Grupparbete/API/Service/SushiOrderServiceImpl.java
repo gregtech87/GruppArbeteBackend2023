@@ -17,18 +17,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class OrderServiceImpl implements OrderService {
+public class SushiOrderServiceImpl implements SushiOrderService {
 
     private OrderRepository orderRepository;
     private CustomerService customerService;
-    private DishesService dishesService;
+    private SushiDishesService sushiDishesService;
 
 
     @Autowired
-    public OrderServiceImpl(OrderRepository ordRepository, CustomerService custService, DishesService dishService){
+    public SushiOrderServiceImpl(OrderRepository ordRepository, CustomerService custService, SushiDishesService dishService){
         orderRepository = ordRepository;
         customerService = custService;
-        dishesService = dishService;
+        sushiDishesService = dishService;
     }
 
 
@@ -57,7 +57,7 @@ public class OrderServiceImpl implements OrderService {
             int dishId = orderItemDTO.getDishId();
             quantity = orderItemDTO.getQuantity();
 
-            Dishes dish = dishesService.findDishById(dishId);
+            Dishes dish = sushiDishesService.findDishById(dishId);
             if (dish == null) {
                 throw new IllegalArgumentException("Felaktigt rätt-ID: " + dishId);
             }

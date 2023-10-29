@@ -5,7 +5,7 @@ package com.Grupparbete.API.Service;
 import com.Grupparbete.API.Entities.Destination;
 import java.util.List;
 
-public interface DestinationService {
+public interface TripDestinationService {
     List<Destination> findAll();
     Destination findById(int id);
     Destination save(Destination destination);

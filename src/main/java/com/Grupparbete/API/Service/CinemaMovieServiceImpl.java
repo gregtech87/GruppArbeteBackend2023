@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class MovieServiceImpl implements MovieService {
+public class CinemaMovieServiceImpl implements CinemaMovieService {
 
  @Autowired
  MovieRepository movieRepository;

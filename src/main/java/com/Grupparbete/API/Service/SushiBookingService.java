@@ -1,7 +1,7 @@
 package com.Grupparbete.API.Service;
 
 import com.Grupparbete.API.DTO.ShowBookingDTO;
-import com.Grupparbete.API.Entities.BookingDetails;
+import com.Grupparbete.API.Entities.SushiBookingDetails;
 import com.Grupparbete.API.Entities.Dishes;
 import com.Grupparbete.API.Entities.SushiBooking;
 
@@ -15,7 +15,7 @@ public interface SushiBookingService {
     SushiBooking updateReservation(int bookingId,int roomId, int guests, List<Integer> dishIds, List<Integer> quantities);
     SushiBooking createReservation(int customerId, int roomId, int guests, List<Integer> dishIds, List<Integer> quantities);
     SushiBooking saveBooking(SushiBooking booking);
-    List<BookingDetails> findBookingDetailsContainingDish(Dishes dish);
+    List<SushiBookingDetails> findBookingDetailsContainingDish(Dishes dish);
 
 }
 

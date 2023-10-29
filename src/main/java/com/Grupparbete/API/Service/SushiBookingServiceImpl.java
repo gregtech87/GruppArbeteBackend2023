@@ -21,16 +21,16 @@ public class SushiBookingServiceImpl implements SushiBookingService {
 
     private SushiBookingRepository bookingRepository;
     private CustomerService customerService;
-    private DishesService dishesService;
+    private SushiDishesService sushiDishesService;
     private SushiRoomService roomService;
     private BookingDetailsRepository bookingDetailsRepository;
 
 
     @Autowired
-    public SushiBookingServiceImpl(SushiBookingRepository bookingRepository, CustomerService custService, DishesService dishService, SushiRoomService roomService, BookingDetailsRepository bookDetailsRepository) {
+    public SushiBookingServiceImpl(SushiBookingRepository bookingRepository, CustomerService custService, SushiDishesService dishService, SushiRoomService roomService, BookingDetailsRepository bookDetailsRepository) {
         this.bookingRepository = bookingRepository;
         customerService = custService;
-        dishesService = dishService;
+        sushiDishesService = dishService;
         roomService = roomService;
         bookingDetailsRepository = bookDetailsRepository;
     }
@@ -64,13 +64,13 @@ public class SushiBookingServiceImpl implements SushiBookingService {
 
         Customer customer = booking.getCustomer();
         SushiRoom room = booking.getRoom();
-        List<BookingDetails> bookingDetails = booking.getBookingDetails();
+        List<SushiBookingDetails> sushiBookingDetails = booking.getBookingDetails();
 
         List<OrderItemDTO> orderedDishes = new ArrayList<>();
         double totalPriceSEK = 0.0;
         double totalPriceYEN = 0.0;
 
-        for (BookingDetails detail : bookingDetails) {
+        for (SushiBookingDetails detail : sushiBookingDetails) {
             Dishes dish = detail.getDish();
             OrderItemDTO orderItemDTO = new OrderItemDTO(dish.getId(), dish.getName(), detail.getQuantity());
             orderedDishes.add(orderItemDTO);
@@ -109,9 +109,9 @@ public class SushiBookingServiceImpl implements SushiBookingService {
 
         SushiBooking existingBooking = existingBookingOptional.get();
 
-        List<BookingDetails> bookingDetailsToRemove = new ArrayList<>(existingBooking.getBookingDetails());
+        List<SushiBookingDetails> sushiBookingDetailsToRemove = new ArrayList<>(existingBooking.getBookingDetails());
 
-        for (BookingDetails bookingDetail : bookingDetailsToRemove) {
+        for (SushiBookingDetails bookingDetail : sushiBookingDetailsToRemove) {
             existingBooking.getBookingDetails().remove(bookingDetail);
             bookingDetailsRepository.delete(bookingDetail);
         }
@@ -123,7 +123,7 @@ public class SushiBookingServiceImpl implements SushiBookingService {
         existingBooking.setBookingDate(new Date());
         existingBooking.setTotalPriceSEK(0.0);
 
-        List<BookingDetails> updatedBookingDetails = new ArrayList<>();
+        List<SushiBookingDetails> updatedSushiBookingDetails = new ArrayList<>();
 
         double totalSEKPrice = 0.0;
         int totalYENPrice = 0;
@@ -132,7 +132,7 @@ public class SushiBookingServiceImpl implements SushiBookingService {
             int dishId = dishIds.get(i);
             int quantity = quantities.get(i);
 
-            Dishes dish = dishesService.findDishById(dishId);
+            Dishes dish = sushiDishesService.findDishById(dishId);
 
             if (dish == null) {
                 throw new IllegalArgumentException("Felaktigt rätt-ID: " + dishId);
@@ -148,7 +148,7 @@ public class SushiBookingServiceImpl implements SushiBookingService {
                 throw new RuntimeException(e);
             }
 
-            BookingDetails updatedBookingDetail = new BookingDetails();
+            SushiBookingDetails updatedBookingDetail = new SushiBookingDetails();
             updatedBookingDetail.setCustomer(existingBooking.getCustomer());
             updatedBookingDetail.setBooking(existingBooking);
             updatedBookingDetail.setGuests(guests);
@@ -163,13 +163,13 @@ public class SushiBookingServiceImpl implements SushiBookingService {
             }
             updatedBookingDetail.setBookingDate(existingBooking.getBookingDate());
 
-            updatedBookingDetails.add(updatedBookingDetail);
+            updatedSushiBookingDetails.add(updatedBookingDetail);
         }
 
         existingBooking.setTotalPriceSEK(totalSEKPrice);
         existingBooking.setTotalPriceYEN(totalYENPrice);
 
-        existingBooking.getBookingDetails().addAll(updatedBookingDetails);
+        existingBooking.getBookingDetails().addAll(updatedSushiBookingDetails);
 
         return bookingRepository.save(existingBooking);
     }
@@ -195,7 +195,7 @@ public class SushiBookingServiceImpl implements SushiBookingService {
 
         Date bookingDate = new Date();
 
-        List<BookingDetails> bookingDetailsList = new ArrayList<>();
+        List<SushiBookingDetails> sushiBookingDetailsList = new ArrayList<>();
         double totalSEKPrice = 0.0;
         int totalYENPrice = 0;
 
@@ -205,7 +205,7 @@ public class SushiBookingServiceImpl implements SushiBookingService {
             int dishId = dishIds.get(i);
             int quantity = quantities.get(i);
 
-            Dishes dish = dishesService.findDishById(dishId);
+            Dishes dish = sushiDishesService.findDishById(dishId);
 
             if (dish == null) {
                 throw new IllegalArgumentException("Felaktigt rätt-ID: " + dishId);
@@ -225,25 +225,25 @@ public class SushiBookingServiceImpl implements SushiBookingService {
             booking.setRoom(room);
             booking.setCustomer(customer);
 
-            BookingDetails bookingDetails = new BookingDetails();
-            bookingDetails.setCustomer(customer);
-            bookingDetails.setBooking(booking);
-            bookingDetails.setGuests(guests);
-            bookingDetails.setRoom(room);
-            bookingDetails.setDish(dish);
-            bookingDetails.setQuantity(quantity);
-            bookingDetails.setPriceSEK(dishSEKPrice);
+            SushiBookingDetails sushiBookingDetails = new SushiBookingDetails();
+            sushiBookingDetails.setCustomer(customer);
+            sushiBookingDetails.setBooking(booking);
+            sushiBookingDetails.setGuests(guests);
+            sushiBookingDetails.setRoom(room);
+            sushiBookingDetails.setDish(dish);
+            sushiBookingDetails.setQuantity(quantity);
+            sushiBookingDetails.setPriceSEK(dishSEKPrice);
             try{
-                bookingDetails.setPriceYEN((int) CurrencyConverter.SekToRequestedCurrency(dishSEKPrice, "JPY"));
+                sushiBookingDetails.setPriceYEN((int) CurrencyConverter.SekToRequestedCurrency(dishSEKPrice, "JPY"));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            bookingDetails.setBookingDate(bookingDate);
+            sushiBookingDetails.setBookingDate(bookingDate);
 
-            bookingDetailsList.add(bookingDetails);
+            sushiBookingDetailsList.add(sushiBookingDetails);
         }
 
-        booking.setBookingDetails(bookingDetailsList);
+        booking.setBookingDetails(sushiBookingDetailsList);
         bookingRepository.save(booking);
 
         return booking;
@@ -256,7 +256,7 @@ public class SushiBookingServiceImpl implements SushiBookingService {
 
     @Override
     @Transactional
-    public List<BookingDetails> findBookingDetailsContainingDish(Dishes dish) {
+    public List<SushiBookingDetails> findBookingDetailsContainingDish(Dishes dish) {
         return bookingRepository.findBookingDetailsContainingDish(dish);
     }
 

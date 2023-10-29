@@ -4,7 +4,7 @@ import com.Grupparbete.API.Entities.Dishes;
 
 import java.util.List;
 
-public interface DishesService {
+public interface SushiDishesService {
         Dishes addDish(Dishes dishes);
         List<Dishes> findAllDishes();
         Dishes findDishById(int id);
