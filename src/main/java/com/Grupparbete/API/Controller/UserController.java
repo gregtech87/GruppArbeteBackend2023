@@ -28,7 +28,6 @@ public class UserController {
     private TripService tripService;
     private TripDestinationService tripDestinationService;
     private CinemaRoomService CinemaRoomService;
-
     private CinemaBookingService cinemaBookingService;
     private CinemaRoomService cinemaRoomService;
 

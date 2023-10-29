@@ -18,14 +18,6 @@ import java.util.List;
 public class AdminController {
 
     private static final Logger logger = LogManager.getLogger("MyLogger");
-//    @Autowired
-//    private CustomerServiceImpl cinemaCustomerService;
-
-//    @Autowired
-//    private MovieServiceImpl movieService;
-
-//    @Autowired
-//    private CinemaRoomServiceImpl cinemaRoomService;
 
     private CinemaMovieService cinemaMovieService;
     private CinemaRoomService cinemaRoomService;

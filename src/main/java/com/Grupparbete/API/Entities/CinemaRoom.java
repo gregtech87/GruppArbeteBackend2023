@@ -4,7 +4,7 @@ package com.Grupparbete.API.Entities;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "room")
+@Table(name = "cinema_room")
 public class CinemaRoom {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
