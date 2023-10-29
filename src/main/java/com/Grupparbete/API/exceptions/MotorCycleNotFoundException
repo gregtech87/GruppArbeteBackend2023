@@ -1,4 +1,4 @@
-package com.Grupparbete.API.exception;
+package com.Grupparbete.API.exceptions;
 
 public class MotorcycleNotFoundException extends RuntimeException{
 
