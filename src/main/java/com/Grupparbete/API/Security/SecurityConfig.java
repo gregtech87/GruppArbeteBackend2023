@@ -23,18 +23,21 @@ public class SecurityConfig {
         http.authorizeHttpRequests(configurer ->
                 configurer
 
-                        //CINEMA
+
                         .requestMatchers(HttpMethod.GET, "/api/v1/customers").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/api/v1/customers").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/v1/customers/{id}").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/v1/customers/{id}").hasRole("ADMIN")
+
+
+                        //CINEMA
                         .requestMatchers(HttpMethod.POST, "/api/v1/movies").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/v1/movies/{id}").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/api/v1/rooms/{id}").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/cinemarooms/{id}").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/v1/movies").hasAnyRole("ADMIN","USER")
-                        .requestMatchers(HttpMethod.GET, "/api/v1/bookings/{id}").hasRole("USER")
-                        .requestMatchers(HttpMethod.PUT, "/api/v1/bookings/{id}").hasRole("USER")
-                        .requestMatchers(HttpMethod.POST, "/api/v1/bookings").hasRole("USER")
+                        .requestMatchers(HttpMethod.GET, "/api/v1/cinemabookings/{id}").hasRole("USER")
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/cinemabookings/{id}").hasRole("USER")
+                        .requestMatchers(HttpMethod.POST, "/api/v1/cinemabookings").hasRole("USER")
 
                         //SUSHI
                         .requestMatchers(HttpMethod.GET,"/api/v1/sushis").hasAnyRole("ADMIN","USER")
